@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Alumnos</title>
 
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
@@ -14,22 +14,22 @@
 
         <h1>Listado Alumnos</h1>
         <div class="container-filter">
-            <p>Buscador</p>           
+            <p>Buscador de alumnos por nombre</p>           
             <select id="selectorSexo">
-                <option value="t" selected>Todos</option>
+                <option value="t" selected>Seleccionar</option>
                 <option value="h">Hombre</option>
                 <option value="m">Mujer</option>
             </select>
-            <input type="search" id="inombre" placeholder="Escribe nombre">
+            <input type="search"  id="inombre"  placeholder="Escribe nombre">
         </div>
-        <ul id="alumnos">
-            <li><img src="img/avatar1.png" alt="avatar">Beni</li>
-            <li><img src="img/avatar2.png" alt="avatar">Txiky</li>
-            <li><img src="img/avatar3.png" alt="avatar">Topi</li>
-            <li><img src="img/avatar4.png" alt="avatar">Sam</li>
-            <li><img src="img/avatar5.png" alt="avatar">Polo</li>
-            <li><img src="img/avatar6.png" alt="avatar">Black</li>
-            <li><img src="img/avatar7.png" alt="avatar">Webo</li>
+        <ul id="alumnos" class="list-group">
+            <li class="list-group-item"><img src="img/avatar1.png" alt="avatar">Beni</li>
+            <li class="list-group-item"><img src="img/avatar2.png" alt="avatar">Txiky</li>
+            <li class="list-group-item"><img src="img/avatar3.png" alt="avatar">Topi</li>
+            <li class="list-group-item"><img src="img/avatar4.png" alt="avatar">Sam</li>
+            <li class="list-group-item"><img src="img/avatar5.png" alt="avatar">Polo</li>
+            <li class="list-group-item"><img src="img/avatar6.png" alt="avatar">Black</li>
+            <li class="list-group-item"><img src="img/avatar7.png" alt="avatar">Webo</li>
         </ul>
 
     </main>
