@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 3</title>
+</head>
+<body>
+<h1>Actividad 3</h1>
+<p>Escribir nombre aquí......</p>
+
+<input type="text"  id="nombre"  placeholder="Escribe nombre">
+<button id="boton">Aceptar</button>
+<p id="texto">_____</p>
+
+
+<script>
+
+    
+    let elBoton = document.getElementById('boton');
+
+    elBoton.addEventListener('click', imprimir );
+
+    function imprimir(){
+
+    let elTexto = document.getElementById('nombre').value;
+    if(elTexto == '')alert(' El campo esta vacio');
+    document.getElementById('texto').innerHTML = elTexto;
+
+    }
+
+    
+
+</script>
+
+</body>
+</html>
