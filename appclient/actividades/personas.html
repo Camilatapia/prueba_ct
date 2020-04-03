@@ -1,0 +1,103 @@
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act 5</title>
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          background-color: #c98787;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td {
+          border: 3px solid #360707;
+          text-align: center;
+          padding: 8px;
+        }
+        
+        
+        </style>
+</head>
+<body>
+    <main class="container">
+    <h1 style="text-align: center;">Actividad 5</h1>
+   
+    <h3 style="font-family: Arial, Helvetica, sans-serif; color: #360707;">Listado Personas en Tabla</h3>
+       
+    
+        <table id="listado">
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              
+            </tr>
+            
+         
+          </table>
+    </main>
+    
+    <script>
+        window.addEventListener('load', init() );
+
+        function init(){
+            console.debug('Document Load and Ready');
+
+            const url = 'https://randomuser.me/api/?results=10';
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+                // recibimos la RESPONSE
+                if (this.readyState == 4 && this.status == 200) {
+                    console.info('peticion GET ' + url);
+                    console.debug( this.responseText );
+
+                    // parsear texto a Json
+                    const jsonData = JSON.parse(this.responseText);    
+                    console.debug( jsonData );
+
+                    // array con personas
+                    const personas = jsonData.results;
+
+                    let lista = document.getElementById('listado');
+                    lista.innerHTML = '';
+                   
+
+                    for(let i=0; i < personas.length; i++){
+                        const persona = personas[i];
+                       // const persona1 = personas[j];
+                       // console.debug( persona.name.first );
+                      lista.innerHTML += `<td>
+                                           <img src="${persona.picture.thumbnail}" alt="avatar">
+                                            </td>
+                                            <td>
+                                                ${persona.name.first} ${persona.name.last}
+                                            </td>
+                                            <td>
+                                                ${persona.gender}
+                                            </td>
+                                            <td>
+                                                ${persona.email}
+                                            </td>`;
+                      }// for
+                  
+                }// his.readyState == 4 && this.status == 200
+
+            };// onreadystatechange
+
+            // preparamos la petición GET
+            xhttp.open("GET", url , true);
+            // enviar la peticion asincrona, meter el codigo en onreadystatechange
+            xhttp.send();
+
+
+
+
+        }        
+    </script>
+
+</body>
+</html>
