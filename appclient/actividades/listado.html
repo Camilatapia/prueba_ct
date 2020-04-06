@@ -14,6 +14,7 @@
         <li id="li2">La pelicula 2 es: </li>
         <li id="li3">La pelicula 3 es: </li>
 -->
+
 </ul>
     
     <script>
@@ -56,20 +57,14 @@
             "clasificacion": "Drama"
         }];
                      
+        let lista = document.getElementById('listado')
+        lista.innerHTML='';
                     
-     //   let peli1 = document.getElementById('li1').textContent = pelicula1.id +" - "+pelicula1.nombre +" - "+pelicula1.director +" - "+pelicula1.clasificacion;
-        
-     //   let peli2 = document.getElementById('li2').textContent = pelicula2.id +" - "+pelicula2.nombre +" - "+pelicula2.director +" - "+pelicula2.clasificacion;
-
-     //   let peli3 = document.getElementById('li3').textContent = pelicula3.id +" - "+pelicula3.nombre +" - "+pelicula3.director +" - "+pelicula3.clasificacion;
-
-            for(let i=0; i < 3; i++){
-                let pelicula = document.getElementById('listado').textContent = document.write(peliculas[i].id +" - "+ peliculas[i].nombre +" - "+ peliculas[i].director +" - "+peliculas[i].clasificacion +"<br>");
-             //let pelicula = listaPeli.peliculas[i];
-              //  let listaPeli = document.getElementById('listado');
-              //  listaPeli.textContent = <li>peliculas[1].nombre;
-           //  let escr = '<li>pelicula.id +" "+ pelicula.nombre + " "+ pelicula.director +" "+ pelicula.clasificacion </li>';
-            }
+     
+            for(let i=0; i < peliculas.length; i++){
+              const  pelicula = peliculas[i];
+              lista.innerHTML += `<li>${pelicula.id} ${pelicula.nombre} ${pelicula.director} ${pelicula.clasificacion}</li>`
+                 }
      
     </script>
 

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Actividad 7</h1>
+    <p> Ejercicio de frutas con Map, filter, reduce. Por console
+    </p>
+
+    <script>
+
+const frutas = [
+            {
+                "nombre": "fresa",
+                "precio": 4.56,
+                "oferta": true,
+                "descuento" : 50,
+                "colores" : [ "rojo" ]
+            },
+            {
+                "nombre": "manzana",
+                "precio": 1.99,
+                "oferta": false,
+                "descuento" : 50,
+                "colores" : [ "rojo","verde","amarillo" ]
+            },
+            {
+                "nombre": "kiwi",
+                "precio": 3.00,
+                "oferta": false,
+                "descuento" : 10,
+                "colores" : [ "verde","amarillo" ]
+            }
+            
+        ];
+
+
+        console.info(frutas);
+
+        //Ejercicio 1 usando map
+        const frutasNombres = frutas.map( fruta => { 
+            console.debug(fruta);
+            return fruta.nombre;
+        });
+        console.info(frutasNombres);
+         
+        //ejercicio 2
+        const frutasOferta = frutas.filter( el => {
+            return el.oferta==true;
+        });
+         console.info('frutasOferta %o',frutasOferta);
+        const frutasNombreOferta = frutasOferta.map( el => {
+            console.debug(el);
+            return el.nombre;
+        });
+
+        console.info(frutasNombreOferta);
+        //fin 2
+
+       // Ejercicio 3
+       const valorInicial = 0;
+        const totalPrecio = frutas.map( el => el.precio ).reduce( (previous, current) => {
+
+            console.debug('previous ' + previous);
+            console.debug('current ' + current);
+
+            return previous + current;
+
+        }, valorInicial );
+        console.info('totalPrecio= ' + totalPrecio);
+        //fin 3
+       
+
+        //Ejercicio 4
+        const valorInicial1 = 0;
+        const totalPrecioDesc = frutas.filter( el1 => {
+            return el1.oferta==true;
+        }).map( el => (el.precio*el.descuento)/100 ).reduce( (previous, current) => {
+
+        console.debug('previous ' + previous);
+        console.debug('current ' + current);
+
+        return (previous + current);
+
+        }, valorInicial1 );
+        console.info('totalPrecioDesc= ' + totalPrecioDesc);
+        //fin 4
+
+        //Ejercicio 5
+        const frutasColores = frutas.map(el =>{
+            return el.colores;
+        });
+        console.info('frutasColores= ' + frutasColores);
+        //fin 5
+
+        // filtrar frutas que precio > 3
+        const frutasFiltradas = frutas.filter( el => {
+            return el.precio >= 3;
+        });
+        
+        console.info('frutasFiltradas %o ', frutasFiltradas);
+
+
+    </script>
+
+
+</body>
+</html>

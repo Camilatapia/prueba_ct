@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act 6</title>
+</head>
+<body>
+    <h1>Actividad 6</h1>
+   
+
+    <script>
+
+var tasks = [
+ 
+ {
+   'name'     : 'Write for Envato Tuts+',
+   'duration' : 120
+ },
+ {
+   'name'     : 'Work out',
+   'duration' : 60
+ },
+ {
+   'name'     : 'Procrastinate on Duolingo',
+   'duration' : 240
+ }
+];
+        console.info(tasks);
+        //ejemplo de map, quiero solo los nombres de las frutas
+        var task_names = tasks.map(function (task, index, array) {
+         return task.name; 
+        });
+        console.info(task_names);
+
+        //reducir el array para sacer el total de precio, cuidado primero un map
+        var total_time = tasks.reduce(function (previous, current) {
+        return previous + current;
+        }, 0);
+ 
+        console.log(total_time);
+
+        // filtrar act que duracion > 2 horas
+        var difficult_tasks = tasks.filter(function (task) {
+         return task.duration >= 120;
+        });
+        console.info(difficult_tasks);
+
+           // Using ES6
+            var difficult_tasks = tasks.filter((task) => task.duration >= 120 );
+    </script>
+
+
+</body>
+</html>
