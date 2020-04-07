@@ -15,7 +15,7 @@
         <h1>Listado Alumnos</h1>
         <div class="container-filter">
             <p>Buscador de alumnos por nombre</p>           
-            <select id="selectorSexo">
+            <select id="selectorSexo" onchange="myFunction()">
                 <option value="t" selected>Seleccionar</option>
                 <option value="h">Hombre</option>
                 <option value="m">Mujer</option>
@@ -44,21 +44,79 @@
 
     <script>
 
+const alumnos = [
+    {
+        "nombre" : "Txiky",
+        "avatar" : "img/avatar1.png",
+        "sexo"   : "h"
+    },
+    {
+        "nombre" : "Sam",
+        "avatar" : "img/avatar2.png",
+        "sexo"   : "h"
+    },
+    {
+        "nombre" : "Rosa",
+        "avatar" : "img/avatar3.png",
+        "sexo"   : "m"
+    },
+    {
+        "nombre" : "Loli",
+        "avatar" : "img/avatar4.png",
+        "sexo"   : "h"
+    },
+    {
+        "nombre" : "Baba",
+        "avatar" : "img/avatar5.png",
+        "sexo"   : "m"
+    },
+    {
+        "nombre" : "Tonti",
+        "avatar" : "img/avatar6.png",
+        "sexo"   : "h"
+    }
+];
+
+
     let titulos = document.getElementsByTagName('h1');
     for(let i=0; i < titulos.length ; i++ ){
             let p = titulos[i];
             p.style.color = 'black';
             
         }
+        window.addEventListener('load', init() );
 
+    function init(){
+    console.debug('Document Load and Ready');
      //cargar dinamicamente la lista
-     let alumnos = document.getElementById('alumnos');
-            //limpiar el contenido
-            alumnos.innerHTML = '';
-            //cargar datos
-            for(let i=1; i < 8; i++){
-                alumnos.innerHTML += `<li><img src="img/avatar${i}.png" alt="avatar">Alumno ${i}</li>`;
-            }
+//     const personasFiltradas = alumnos.filter(el => el.sexo =="h");
+             pintarLista(alumnos);
+        
+    } //init
+  /*  const alumnosHombres= alumnos.filter(el => el.sexo =="h");
+    pintarLista(alumnosHombres);*/
+    function pintarLista(arrayPersonas){
+        let lista=document.getElementById('alumnos');
+        lista.innerHTML ='';
+        for(let i=1; i < arrayPersonas.length; i++){
+               const alumno = arrayPersonas[i];
+                lista.innerHTML += `<li><img src="img/avatar${i}.png" alt="avatar"> ${alumno.nombre} </li>`;
+            }}
+
+    function myFunction() {
+  var x = document.getElementById("selectorSexo").value;
+  
+  if(x==="h"){
+    console.info(x);  
+    const personasFiltradas = alumnos.filter(el => el.sexo =="h");
+    pintarLista(personasFiltradas);
+  } else if(x==="m") {
+      console.info("nose ke pasa");
+   const personasFiltradas2 = alumnos.filter(el => el.sexo =="m");
+    pintarLista(personasFiltradas2);
+    } else {pintarLista(alumnos)}
+  
+}
     </script>
 
 </body>

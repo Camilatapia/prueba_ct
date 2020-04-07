@@ -76,26 +76,26 @@ const frutas = [
 
         //Ejercicio 4
         const valorInicial1 = 0;
-        const totalPrecioDesc = frutas.filter( el1 => {
-            return el1.oferta==true;
-        }).map( el => (el.precio*el.descuento)/100 ).reduce( (previous, current) => {
-
-        console.debug('previous ' + previous);
-        console.debug('current ' + current);
-
-        return (previous + current);
-
-        }, valorInicial1 );
+        const totalPrecioDesc = frutas.map( el => { 
+                                    if( el.oferta ){
+                                        return ( el.precio - ( el.precio * el.descuento /100 ));
+                                    }else{
+                                        return el.precio;
+                                    }    
+                                }).reduce( (p,c) => p + c, 0 );
         console.info('totalPrecioDesc= ' + totalPrecioDesc);
         //fin 4
 
         //Ejercicio 5
-        const frutasColores = frutas.map(el =>{
-            return el.colores;
-        });
+        const frutasColores = frutas.map(el => el.colores )
+                                  .reduce( (p,c,i,a) => { 
+                                                        const resultado = p.concat(c);
+                                                        return resultado;
+                                                    });
         console.info('frutasColores= ' + frutasColores);
         //fin 5
-
+        // Ejercicios 6: frutas colores sin repeticion
+        console.info('frutasColores sin repeticion ' + [...new Set(frutasColores)]);
         // filtrar frutas que precio > 3
         const frutasFiltradas = frutas.filter( el => {
             return el.precio >= 3;
