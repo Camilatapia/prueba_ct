@@ -15,7 +15,7 @@
         <h1>Listado Alumnos</h1>
         <div class="container-filter">
             <p>Buscador de alumnos por nombre</p>           
-            <select id="selectorSexo" onchange="myFunction()">
+            <select id="selectorSexo">
                 <option value="t" selected>Seleccionar</option>
                 <option value="h">Hombre</option>
                 <option value="m">Mujer</option>
@@ -28,17 +28,7 @@
                 <li>Cargando....</li>
         
         </ul>
-        <!--
-        <ul id="alumnos" class="list-group"></ul>
-        <li class="list-group-item"><img src="img/avatar1.png" alt="avatar">Beni</li>
-            <li class="list-group-item"><img src="img/avatar2.png" alt="avatar">Txiky</li>
-            <li class="list-group-item"><img src="img/avatar3.png" alt="avatar">Topi</li>
-            <li class="list-group-item"><img src="img/avatar4.png" alt="avatar">Sam</li>
-            <li class="list-group-item"><img src="img/avatar5.png" alt="avatar">Polo</li>
-            <li class="list-group-item"><img src="img/avatar6.png" alt="avatar">Black</li>
-            <li class="list-group-item"><img src="img/avatar7.png" alt="avatar">Webo</li>
-        </ul>
-        -->
+      
     </main>
 
 
@@ -63,7 +53,7 @@ const alumnos = [
     {
         "nombre" : "Loli",
         "avatar" : "img/avatar4.png",
-        "sexo"   : "h"
+        "sexo"   : "m"
     },
     {
         "nombre" : "Baba",
@@ -84,13 +74,33 @@ const alumnos = [
             p.style.color = 'black';
             
         }
-        window.addEventListener('load', init() );
+    
+    window.addEventListener('load', init() );
 
     function init(){
     console.debug('Document Load and Ready');
-     //cargar dinamicamente la lista
-//     const personasFiltradas = alumnos.filter(el => el.sexo =="h");
-             pintarLista(alumnos);
+    listener();
+    pintarLista(alumnos);
+            /*const url = '/apprest/api/personas';
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.info('peticion GET ' + url);
+                    console.debug( this.responseText );
+
+                    // parsear texto a Json
+                    const jsonData = JSON.parse(this.responseText);    
+                    console.debug( jsonData );
+
+                    // array con personas
+                    const alumnos = jsonData.results;
+                    pintarLista(alumnos);
+                    }
+            }
+            xhttp.open("GET", url , true);
+            xhttp.send();*/
+           
         
     } //init
   /*  const alumnosHombres= alumnos.filter(el => el.sexo =="h");
@@ -101,9 +111,40 @@ const alumnos = [
         for(let i=1; i < arrayPersonas.length; i++){
                const alumno = arrayPersonas[i];
                 lista.innerHTML += `<li><img src="img/avatar${i}.png" alt="avatar"> ${alumno.nombre} </li>`;
-            }}
+            }
+        }
+        
 
-    function myFunction() {
+    function listener(){
+
+    let selectorSexo = document.getElementById('selectorSexo');
+    let inputNombre = document.getElementById('inombre');
+
+    selectorSexo.addEventListener('change', function(){
+    const sexo = selectorSexo.value;
+    console.debug('cambiado select ' + sexo);
+            if ( 't' != sexo ){
+                const personasFiltradas = alumnos.filter( el => el.sexo == sexo );
+                console.info('el sexo es' + sexo);
+                pintarLista(personasFiltradas);
+            }else{
+                pintarLista(alumnos);
+            }    
+          });
+
+    inputNombre.addEventListener('keyup', function(){
+           const busqueda = inputNombre.value.toLowerCase();
+            console.info('tecla pulsada, valor input ' +  busqueda );
+            if ( busqueda ){
+            const personasFiltradas = alumnos.filter( el => el.nombre.toLowerCase().includes(busqueda));
+             pintarLista(personasFiltradas);
+            }else{
+            pintarLista(alumnos);
+                 }    
+          });
+    }
+
+ /*   function myFunction() {
   var x = document.getElementById("selectorSexo").value;
   
   if(x==="h"){
@@ -116,7 +157,7 @@ const alumnos = [
     pintarLista(personasFiltradas2);
     } else {pintarLista(alumnos)}
   
-}
+}*/
     </script>
 
 </body>
