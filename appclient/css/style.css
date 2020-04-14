@@ -1,16 +1,17 @@
 /* estilos propios */
 h1{ 
-    background-color: burlywood;
-    color: chocolate;
+    background-color:rgb(31, 84, 146);
     text-align: center;
     padding: 10px 5px;
     font-size: 1.5em;
     margin-top: 5px;
+    
+    
 }
 
 
 li{
-    border-bottom: 1px solid rgb(109, 102, 102);
+    border-bottom: 1px solid rgb(219, 216, 216);
     margin-bottom: 0.3rem;
     padding: 5px;
     
@@ -23,5 +24,5 @@ main.container{
 
 .container-filter{
     padding: 0.5rem;
-    border: 1px solid #DDD;
+    border: 1px solid rgb(228, 221, 221);
 }

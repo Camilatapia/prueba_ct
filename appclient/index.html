@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alumnos</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
-
+n 
 </head>
 <body>
     <main class="container">
@@ -22,143 +24,50 @@
             </select>
             <input type="search"  id="inombre"  placeholder="Escribe nombre">
         </div>
+        <div class="row align-self-center">
+            <div class="col">
+                <ul id="alumnos">
+                    <!-- innerHTML -->
+                    <li>Cargando....</li>     
+            </ul>
+            </div>
+            
+            <div class="col">
+            <form>
+                <div class="form-group">
+                <input class="form-control" type="text" id="inputId" placeholder="id" readonly>
+               
+            </div>
+                <div class="form-group">
+                <label for="inputNombre">Escribe nombre</label>
+                <br><br>
+                <input class="form-control" type="text" id="inputNombre" placeholder="Escribe nombre">
+                </div>
+                <div>    
+                <label for="guardarSexo">Seleccionar sexo</label>
+                <br><br>
+                <select class="form-control" id="guardarSexo">
+                    <option value="t" selected>Seleccionar</option>
+                    <option value="h">Hombre</option>
+                    <option value="m">Mujer</option>
+                </select>
+                <br>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" value="Guardar" onclick="guardar()">Guardar</button>
+                <button type="submit" class="btn btn-primary" value="Nueva Persona" onclick="seleccionar()">Nueva Persona</button>
+                <button type="submit" class="btn btn-primary" value="Modificar" onclick="modificar()">Modificar</button>
+            
+            </form> 
+            </div>
         
-            <ul id="alumnos">
-                <!-- innerHTML -->
-                <li>Cargando....</li>
-        
-        </ul>
-      
+        </div>
+            
     </main>
 
 
-    <script>
-
-const alumnos = [
-    {
-        "nombre" : "Txiky",
-        "avatar" : "img/avatar1.png",
-        "sexo"   : "h"
-    },
-    {
-        "nombre" : "Sam",
-        "avatar" : "img/avatar2.png",
-        "sexo"   : "h"
-    },
-    {
-        "nombre" : "Rosa",
-        "avatar" : "img/avatar3.png",
-        "sexo"   : "m"
-    },
-    {
-        "nombre" : "Loli",
-        "avatar" : "img/avatar4.png",
-        "sexo"   : "m"
-    },
-    {
-        "nombre" : "Baba",
-        "avatar" : "img/avatar5.png",
-        "sexo"   : "m"
-    },
-    {
-        "nombre" : "Tonti",
-        "avatar" : "img/avatar6.png",
-        "sexo"   : "h"
-    }
-];
-
-
-    let titulos = document.getElementsByTagName('h1');
-    for(let i=0; i < titulos.length ; i++ ){
-            let p = titulos[i];
-            p.style.color = 'black';
-            
-        }
-    
-    window.addEventListener('load', init() );
-
-    function init(){
-    console.debug('Document Load and Ready');
-    listener();
-    pintarLista(alumnos);
-            /*const url = '/apprest/api/personas';
-            var xhttp = new XMLHttpRequest();
-
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    console.info('peticion GET ' + url);
-                    console.debug( this.responseText );
-
-                    // parsear texto a Json
-                    const jsonData = JSON.parse(this.responseText);    
-                    console.debug( jsonData );
-
-                    // array con personas
-                    const alumnos = jsonData.results;
-                    pintarLista(alumnos);
-                    }
-            }
-            xhttp.open("GET", url , true);
-            xhttp.send();*/
-           
-        
-    } //init
-  /*  const alumnosHombres= alumnos.filter(el => el.sexo =="h");
-    pintarLista(alumnosHombres);*/
-    function pintarLista(arrayPersonas){
-        let lista=document.getElementById('alumnos');
-        lista.innerHTML ='';
-        for(let i=1; i < arrayPersonas.length; i++){
-               const alumno = arrayPersonas[i];
-                lista.innerHTML += `<li><img src="img/avatar${i}.png" alt="avatar"> ${alumno.nombre} </li>`;
-            }
-        }
-        
-
-    function listener(){
-
-    let selectorSexo = document.getElementById('selectorSexo');
-    let inputNombre = document.getElementById('inombre');
-
-    selectorSexo.addEventListener('change', function(){
-    const sexo = selectorSexo.value;
-    console.debug('cambiado select ' + sexo);
-            if ( 't' != sexo ){
-                const personasFiltradas = alumnos.filter( el => el.sexo == sexo );
-                console.info('el sexo es' + sexo);
-                pintarLista(personasFiltradas);
-            }else{
-                pintarLista(alumnos);
-            }    
-          });
-
-    inputNombre.addEventListener('keyup', function(){
-           const busqueda = inputNombre.value.toLowerCase();
-            console.info('tecla pulsada, valor input ' +  busqueda );
-            if ( busqueda ){
-            const personasFiltradas = alumnos.filter( el => el.nombre.toLowerCase().includes(busqueda));
-             pintarLista(personasFiltradas);
-            }else{
-            pintarLista(alumnos);
-                 }    
-          });
-    }
-
- /*   function myFunction() {
-  var x = document.getElementById("selectorSexo").value;
-  
-  if(x==="h"){
-    console.info(x);  
-    const personasFiltradas = alumnos.filter(el => el.sexo =="h");
-    pintarLista(personasFiltradas);
-  } else if(x==="m") {
-      console.info("nose ke pasa");
-   const personasFiltradas2 = alumnos.filter(el => el.sexo =="m");
-    pintarLista(personasFiltradas2);
-    } else {pintarLista(alumnos)}
-  
-}*/
-    </script>
+    <script src="js/ajax.js"></script>
+    <script src="js/main.js"></script>
 
 </body>
 </html>
