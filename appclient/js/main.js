@@ -17,6 +17,8 @@ function init(){
 console.debug('Document Load and Ready');
 listener();
 
+initGallery();
+
 const promesa = ajax("GET", endpoint, undefined);
 promesa
 .then( data => {
@@ -52,6 +54,8 @@ function listener(){
 
 let selectorSexo = document.getElementById('selectorSexo');
 let inputNombre = document.getElementById('inombre');
+
+//selectorSexo.addEventListener('change', busqueda( selectorSexo.value, inputNombre.value ) );
 
 selectorSexo.addEventListener('change', function(){
 const sexo = selectorSexo.value;
@@ -95,11 +99,11 @@ function eliminar(indice){
 }
 function seleccionar(indice){
 
-   // let  personaSeleccionada = { "id": "0","nombre": "ain " };
+    let  personaSeleccionada = { "id":0, "nombre": "sin nombre" , "avatar" : "avatar7.png", "sexo": "h" };
 
-    //if ( indice != 0 ){
-    let personaSeleccionada = personas[indice];
-    //}
+    if ( indice > -1 ){
+        personaSeleccionada = personas[indice];
+    }
     
     console.debug('click guardar persona %o', personaSeleccionada);
    
@@ -108,32 +112,68 @@ function seleccionar(indice){
     document.getElementById('inputNombre').value = personaSeleccionada.nombre;
     document.getElementById('guardarSexo').value = personaSeleccionada.sexo;
 
+    document.getElementById('inputAvatar').value = personaSeleccionada.avatar;
+
+    //seleccionar Avatar
+    const avatares = document.querySelectorAll('#gallery img');
+    avatares.forEach( el => {
+        el.classList.remove('selected');
+        if ( "img/"+personaSeleccionada.avatar == el.dataset.path ){
+            el.classList.add('selected');
+        }
+    });
+
+       /*
+    let select = document.getElementById('inputSexo');
+    const sexo = personaSeleccionada.sexo;
+    switch( sexo ){
+        case "h":
+            select.item(1).selected = "selected";
+            break;
+        case "m":
+            select.item(2).selected = "selected";
+            break;
+        default:
+            select.item(0).selected = "selected";
+    }
+    */
+
 }
 
 function guardar(){
 
     //console.trace('click guardar');
-    let id = document.getElementById('inputId').value;
-    let nombre = document.getElementById('inputNombre').value;
-    let sexo = document.getElementById('guardarSexo').value;
+    const id = document.getElementById('inputId').value;
+    const nombre = document.getElementById('inputNombre').value;
+    const sexo = document.getElementById('guardarSexo').value;
+    const avatar = document.getElementById('inputAvatar').value;
 
     let persona = {
         "id" : id,
         "nombre" : nombre,
-        "avatar" : "avatar7.png",
-        "sexo"   : sexo
+        "avatar" : avatar,
+        "sexo" : sexo
     };
 
     console.debug('persona a guardar %o', persona);
-    personas.push(persona);
-    
+
     //TODO llamar servicio rest
-   
-    localStorage.setItem('rutina', JSON.stringify(personas));
-    
+
+    if ( id == 0 ){
+        console.trace('Crear nueva persona');
+        persona.id = ++personas.length;
+        personas.push(persona);
+
+    }else{
+        console.trace('Modificar persona');
+        personas = personas.map( el => (el.id == persona.id) ? persona : el );
+    }
+
     pintarLista(personas);
 
 }
+
+
 function busqueda( sexo = 't', nombreBuscar = '' ){
 
     console.info('Busqueda sexo %o nombre %o', sexo, nombreBuscar );
@@ -156,9 +196,35 @@ function modificar(){
         method: 'post',
         body: datos
     }
+}
+/**
+ * Carga todas las imagen de los avatares
+ */
+function initGallery(){
+    let divGallery =  document.getElementById('gallery');
+    for ( let i = 1; i <= 7 ; i++){
+        divGallery.innerHTML += `<img onclick="selectAvatar(event)" 
+                                      class="avatar" 
+                                      data-path="img/avatar${i}.png"
+                                      src="img/avatar${i}.png">`;
+    }
+}
 
+function selectAvatar(evento){
+    console.trace('click avatar');
+    const avatares = document.querySelectorAll('#gallery img');
+    //eliminamos la clases 'selected' a todas las imagenes del div#gallery
+    avatares.forEach( el => el.classList.remove('selected') );
+    // ponemos clase 'selected' a la imagen que hemos hecho click ( evento.target )
+    evento.target.classList.add('selected');
+
+    let iAvatar = document.getElementById('inputAvatar');
+    //@see: https://developer.mozilla.org/es/docs/Learn/HTML/como/Usando_atributos_de_datos
+    iAvatar.value = evento.target.dataset.path;
+
+}
 
 
 
     
-}
+
