@@ -1,6 +1,6 @@
 "use strict";
 // este array se carga de forma asincrona mediante Ajax
-const endpoint = 'http://localhost:8080/apprest/api/personas/';
+const endpoint = 'http://localhost:8080/apprestct/api/personas/';
 //const endpoint = 'http://127.0.0.1:5500/appclient/js/data/personas.json';
 let personas =[];
 

@@ -26,13 +26,13 @@ function ajax( metodo, url, datos ){
                     resolve(jsonData);
                 }else{
                     // falla promesa, catch
-                    reject( Error( this.status ));
+                    reject( Error( JSON.parse(this.responseText) ));
                 }               
             }// readyState == 4
  
         };// onreadystatechange
  
         xhttp.open( metodo , url , true);
-        xhttp.send();
-    });
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send( JSON.stringify(datos) );    });
  }
