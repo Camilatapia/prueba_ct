@@ -1,7 +1,7 @@
 "use strict";
 // este array se carga de forma asincrona mediante Ajax
-//const endpoint = 'http://localhost:8080/apprest/api/personas/';
-const endpoint = 'http://127.0.0.1:5500/appclient/js/data/personas.json';
+const endpoint = 'http://localhost:8080/apprest/api/personas/';
+//const endpoint = 'http://127.0.0.1:5500/appclient/js/data/personas.json';
 let personas =[];
 
 let titulos = document.getElementsByTagName('h1');
@@ -41,12 +41,17 @@ console.debug('continua la ejecuion del script de forma sincrona');
 function pintarLista(arrayPersonas){
     let lista=document.getElementById('alumnos');
     lista.innerHTML ='';
-    for(let i=0; i < arrayPersonas.length; i++){
+    arrayPersonas.forEach( (p,i) => lista.innerHTML += `<li>
+    <img src="img/${p.avatar}" alt="avatar">${p.nombre}
+    <div class="row justify-content-end"><i class="fas fa-pencil-ruler" onclick="seleccionar(${i})"></i>
+            <i class="fas fa-trash" onclick="eliminar(${i})"></i></div> 
+ </li>` );
+  /*  for(let i=0; i < arrayPersonas.length; i++){
            const alumno = arrayPersonas[i];
             lista.innerHTML += `<li><img src="img/${alumno.avatar}" alt="avatar"> ${alumno.nombre}
             <div class="row justify-content-end"><i class="fas fa-pencil-ruler" onclick="seleccionar(${i})"></i>
             <i class="fas fa-trash" onclick="eliminar(${i})"></i></div> </li>`;
-        }
+        }*/
     }
     
 
@@ -54,6 +59,7 @@ function listener(){
 
 let selectorSexo = document.getElementById('selectorSexo');
 let inputNombre = document.getElementById('inombre');
+
 
 //selectorSexo.addEventListener('change', busqueda( selectorSexo.value, inputNombre.value ) );
 
@@ -88,15 +94,34 @@ function eliminar(indice){
     const mensaje = `¿Estas seguro que quieres eliminar  a ${personaSeleccionada.nombre} ?`;
     if ( confirm(mensaje) ){
 
-        //TODO mirar como remover de una posicion
-        //personas = personas.splice(indice,1);
-        personas = personas.filter( el => el.id != personaSeleccionada.id) 
-        pintarLista(personas);
-        //TODO llamada al servicio rest
+        const url = endpoint + personaSeleccionada.id;
+        ajax('DELETE', url, undefined)
+            .then( data => {
+ 
+                    // conseguir de nuevo todos los alumnos
+                    ajax("GET", endpoint, undefined)               
+                    .then( data => {
+                            console.trace('promesa resolve'); 
+                            personas = data;
+                            pintarLista( personas );
+                
+                    }).catch( error => {
+                            console.warn('promesa rejectada');
+                            alert(error);
+                    });
+
+            })
+            .catch( error => {
+                console.warn('promesa rejectada');
+                alert(error);
+            });
 
     }
 
-}
+
+    }
+
+
 function seleccionar(indice){
 
     let  personaSeleccionada = { "id":0, "nombre": "sin nombre" , "avatar" : "avatar7.png", "sexo": "h" };
@@ -159,17 +184,61 @@ function guardar(){
 
     //TODO llamar servicio rest
 
-    if ( id == 0 ){
+       //CREAR
+       if ( id == 0 ){ 
         console.trace('Crear nueva persona');
-        persona.id = ++personas.length;
-        personas.push(persona);
+        //persona.id = ++personas.length;
+        //personas.push(persona);
 
+        ajax('POST',endpoint, persona)
+            .then( data => {
+ 
+                    // conseguir de nuevo todos los alumnos
+                    ajax("GET", endpoint, undefined)               
+                    .then( data => {
+                            console.trace('promesa resolve'); 
+                            personas = data;
+                            pintarLista( personas );
+                
+                    }).catch( error => {
+                            console.warn('promesa rejectada');
+                            alert(error);
+                    });
+
+            })
+            .catch( error => {
+                console.warn('promesa rejectada');
+                alert(error);
+            });
+        
+
+    // MODIFICAR
     }else{
         console.trace('Modificar persona');
-        personas = personas.map( el => (el.id == persona.id) ? persona : el );
-    }
 
-    pintarLista(personas);
+        const url = endpoint + persona.id;
+        ajax('PUT', url , persona)
+            .then( data => {
+ 
+                    // conseguir de nuevo todos los alumnos
+                    ajax("GET", endpoint, undefined)               
+                    .then( data => {
+                            console.trace('promesa resolve'); 
+                            personas = data;
+                            pintarLista( personas );
+                
+                    }).catch( error => {
+                            console.warn('promesa rejectada');
+                            alert(error);
+                    });
+
+            })
+            .catch( error => {
+                console.warn('No se pudo actualizar');
+                alert(error);
+            });
+        
+    }
 
 }
 
@@ -179,24 +248,7 @@ function busqueda( sexo = 't', nombreBuscar = '' ){
     console.info('Busqueda sexo %o nombre %o', sexo, nombreBuscar );
 }
 
-function modificar(){
-    console.trace('click modificar');
-    let id = document.getElementById('inputId').value;
-    let nombre = document.getElementById('inputNombre').value;
-    let sexo = document.getElementById('guardarSexo').value;
 
-    
-
-    let datos=new FormData();
-    datos.append(inputId, id);
-    datos.append(inputNombre, nombre);
-    datos.append(guardarSexo, sexo);
-    
-    var param= {
-        method: 'post',
-        body: datos
-    }
-}
 /**
  * Carga todas las imagen de los avatares
  */
@@ -205,7 +257,7 @@ function initGallery(){
     for ( let i = 1; i <= 7 ; i++){
         divGallery.innerHTML += `<img onclick="selectAvatar(event)" 
                                       class="avatar" 
-                                      data-path="img/avatar${i}.png"
+                                      data-path="avatar${i}.png"
                                       src="img/avatar${i}.png">`;
     }
 }
