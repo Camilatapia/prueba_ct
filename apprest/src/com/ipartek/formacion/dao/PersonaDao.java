@@ -69,8 +69,7 @@ private static final Logger LOGGER = Logger.getLogger(PersonaDao.class.getCanoni
 		
 		Persona registro = null;
 		try (Connection con = ConnectionManager.getConnection();
-				PreparedStatement pst = con.prepareStatement(SQL_GET_BY_ID);
-		) {
+				PreparedStatement pst = con.prepareStatement(SQL_GET_BY_ID);) {
 
 			pst.setInt(1, id);
 			LOGGER.info(pst.toString());
@@ -84,15 +83,13 @@ private static final Logger LOGGER = Logger.getLogger(PersonaDao.class.getCanoni
 					throw new Exception("Registro no encontrado para id = " + id);
 				}
 			}
-			
-			
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
 
 		return registro;
-	}
+		}
 
 	@Override
 	public Persona delete(int id) throws Exception, SQLException {
@@ -102,8 +99,7 @@ private static final Logger LOGGER = Logger.getLogger(PersonaDao.class.getCanoni
 		registro = getById(id);
 		
 		try (Connection con = ConnectionManager.getConnection();
-				PreparedStatement pst = con.prepareStatement(SQL_DELETE);
-		) {
+				PreparedStatement pst = con.prepareStatement(SQL_DELETE);) {
 
 			pst.setInt(1, id);
 			LOGGER.info(pst.toString());
@@ -127,8 +123,7 @@ private static final Logger LOGGER = Logger.getLogger(PersonaDao.class.getCanoni
 		
 		
 		try (Connection con = ConnectionManager.getConnection();
-				PreparedStatement pst = con.prepareStatement(SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
-		) {
+				PreparedStatement pst = con.prepareStatement(SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS);) {
 
 			pst.setString(1, pojo.getNombre() );
 			pst.setString(2, pojo.getAvatar() );
@@ -160,8 +155,7 @@ private static final Logger LOGGER = Logger.getLogger(PersonaDao.class.getCanoni
 	public Persona update(Persona pojo) throws Exception, SQLException {
 		
 		try (Connection con = ConnectionManager.getConnection();
-				PreparedStatement pst = con.prepareStatement(SQL_UPDATE);
-		) {
+				PreparedStatement pst = con.prepareStatement(SQL_UPDATE);) {
 
 			pst.setString(1, pojo.getNombre() );
 			pst.setString(2, pojo.getAvatar() );

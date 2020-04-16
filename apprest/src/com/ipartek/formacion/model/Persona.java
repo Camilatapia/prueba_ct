@@ -14,8 +14,6 @@ public class Persona {
 	@NotEmpty
 	private String avatar;
 	
-	//TODO regexp para "h" o "m"
-	// @Pattern(regexp = "" )
 	private String sexo;
 	
 	public Persona() {
@@ -72,6 +70,4 @@ public class Persona {
 		return "Persona [id=" + id + ", nombre=" + nombre + ", avatar=" + avatar + ", sexo=" + sexo + "]";
 	}
 
-	
-	
 }

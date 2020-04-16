@@ -1,5 +1,3 @@
-
-
 /**
 * llamada ajax en vanilla javascript
 * @param {*} metodo 

@@ -7,7 +7,7 @@ let personas =[];
 let titulos = document.getElementsByTagName('h1');
 for(let i=0; i < titulos.length ; i++ ){
         let p = titulos[i];
-        p.style.color = 'black';
+        p.style.color = 'white';
         
     }
 
@@ -32,8 +32,6 @@ promesa
 });
 
 console.debug('continua la ejecuion del script de forma sincrona');
-// CUIDADO!!!, es asincrono aqui personas estaria sin datos
-// pintarLista( personas );
        
     
 } //init
@@ -43,25 +41,17 @@ function pintarLista(arrayPersonas){
     lista.innerHTML ='';
     arrayPersonas.forEach( (p,i) => lista.innerHTML += `<li>
     <img src="img/${p.avatar}" alt="avatar">${p.nombre}
-    <div class="row justify-content-end"><i class="fas fa-pencil-ruler" onclick="seleccionar(${i})"></i>
-            <i class="fas fa-trash" onclick="eliminar(${i})"></i></div> 
- </li>` );
-  /*  for(let i=0; i < arrayPersonas.length; i++){
-           const alumno = arrayPersonas[i];
-            lista.innerHTML += `<li><img src="img/${alumno.avatar}" alt="avatar"> ${alumno.nombre}
-            <div class="row justify-content-end"><i class="fas fa-pencil-ruler" onclick="seleccionar(${i})"></i>
-            <i class="fas fa-trash" onclick="eliminar(${i})"></i></div> </li>`;
-        }*/
-    }
+    <div class="row justify-content-end">
+    <i class="fas fa-pencil-ruler" onclick="seleccionar(${i})"></i>
+    <i class="fas fa-trash" onclick="eliminar(${i})"></i></div> 
+    </li>`);
+     }
     
 
 function listener(){
 
 let selectorSexo = document.getElementById('selectorSexo');
 let inputNombre = document.getElementById('inombre');
-
-
-//selectorSexo.addEventListener('change', busqueda( selectorSexo.value, inputNombre.value ) );
 
 selectorSexo.addEventListener('change', function(){
 const sexo = selectorSexo.value;
@@ -77,14 +67,14 @@ console.debug('cambiado select ' + sexo);
 
 inputNombre.addEventListener('keyup', function(){
 
-       const busqueda = inputNombre.value.toLowerCase();
+        const busqueda = inputNombre.value.toLowerCase();
         console.info('tecla pulsada, valor input ' +  busqueda );
         if ( busqueda ){            const personasFiltradas = personas.filter( el => el.nombre.toLowerCase().includes(busqueda));
          pintarLista(personasFiltradas);
         }else{
         pintarLista(personas);
-                         }    
-      });
+         }    
+    });
 }
 
 
@@ -96,8 +86,7 @@ function eliminar(indice){
 
         const url = endpoint + personaSeleccionada.id;
         ajax('DELETE', url, undefined)
-            .then( data => {
- 
+        .then( data => {
                     // conseguir de nuevo todos los alumnos
                     ajax("GET", endpoint, undefined)               
                     .then( data => {
@@ -110,17 +99,15 @@ function eliminar(indice){
                             alert(error);
                     });
 
-            })
-            .catch( error => {
-                console.warn('promesa rejectada');
-                alert(error);
-            });
+                    })
+        .catch( error => {
+                    console.warn('promesa rejectada');
+                    alert(error);
+                    });
+
+        }
 
     }
-
-
-    }
-
 
 function seleccionar(indice){
 
@@ -133,10 +120,9 @@ function seleccionar(indice){
     console.debug('click guardar persona %o', personaSeleccionada);
    
     //rellernar formulario
-    document.getElementById('inputId').value = personaSeleccionada.id;
+    document.getElementById('inputId').value     = personaSeleccionada.id;
     document.getElementById('inputNombre').value = personaSeleccionada.nombre;
     document.getElementById('guardarSexo').value = personaSeleccionada.sexo;
-
     document.getElementById('inputAvatar').value = personaSeleccionada.avatar;
 
     //seleccionar Avatar
@@ -167,7 +153,7 @@ function seleccionar(indice){
 
 function guardar(){
 
-    //console.trace('click guardar');
+    console.trace('click guardar');
     const id = document.getElementById('inputId').value;
     const nombre = document.getElementById('inputNombre').value;
     const sexo = document.getElementById('guardarSexo').value;
@@ -182,14 +168,12 @@ function guardar(){
 
     console.debug('persona a guardar %o', persona);
 
-    //TODO llamar servicio rest
+    
 
-       //CREAR
+       //Crear nueva persona
        if ( id == 0 ){ 
         console.trace('Crear nueva persona');
-        //persona.id = ++personas.length;
-        //personas.push(persona);
-
+      
         ajax('POST',endpoint, persona)
             .then( data => {
  
@@ -212,7 +196,7 @@ function guardar(){
             });
         
 
-    // MODIFICAR
+    // Modificar una persona
     }else{
         console.trace('Modificar persona');
 
@@ -249,9 +233,7 @@ function busqueda( sexo = 't', nombreBuscar = '' ){
 }
 
 
-/**
- * Carga todas las imagen de los avatares
- */
+//Cargar avatares
 function initGallery(){
     let divGallery =  document.getElementById('gallery');
     for ( let i = 1; i <= 7 ; i++){
@@ -262,6 +244,7 @@ function initGallery(){
     }
 }
 
+//Seleccionar avatar 
 function selectAvatar(evento){
     console.trace('click avatar');
     const avatares = document.querySelectorAll('#gallery img');

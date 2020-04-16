@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
-n 
+
 </head>
 <body>
     <main class="container">
 
         <h1>Listado Alumnos</h1>
         <div class="container-filter">
-            <p>Buscador de alumnos por nombre</p>           
+            <p>Buscador de alumnos por nombre</p>    
             <select id="selectorSexo">
                 <option value="t" selected>Seleccionar</option>
                 <option value="h">Hombre</option>
@@ -24,6 +24,7 @@ n
             </select>
             <input type="search"  id="inombre"  placeholder="Escribe nombre">
         </div>
+        <br>
         <div class="row align-self-center">
             <div class="col">
                 <ul id="alumnos">
@@ -35,7 +36,7 @@ n
             <div class="col">
             <form>
                 <div class="form-group">
-                <input class="form-control" type="text" id="inputId" placeholder="id" readonly>
+                <input class="form-control" type="text" id="inputId" placeholder="id" hidden>
                
             </div>
                 <div class="form-group">
@@ -54,12 +55,12 @@ n
                 <br>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="inputAvatar" readonly="readonly" placeholder="url imagen">
+                    <input type="text" class="form-control" id="inputAvatar" placeholder="url imagen" hidden>
                  </div>
 
                  <div id="gallery">                    
                 </div>
-                
+                <br>
                 <input type="button" class="btn btn-primary" value="Guardar" onclick="guardar()">
                 <input type="button" class="btn btn-primary" value="Nueva Persona" onclick="seleccionar()">
                
