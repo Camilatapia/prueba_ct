@@ -1,31 +1,26 @@
 "use strict";
 // este array se carga de forma asincrona mediante Ajax
-const endpoint = 'http://localhost:8080/apprestct/api/personas/';
+const endpoint = 'http://localhost:8080/apprestct/api/cursos/';
 //const endpoint = 'http://127.0.0.1:5500/appclient/js/data/personas.json';
-let personas =[];
+let cursos =[];
 
-let titulos = document.getElementsByTagName('h1');
-for(let i=0; i < titulos.length ; i++ ){
-        let p = titulos[i];
-        p.style.color = 'white';
-        
-    }
+
 
 window.addEventListener('load', init() );
 
 function init(){
 console.debug('Document Load and Ready');
-listener();
+//listener();
 
-initGallery();
-pintarLista( personas );
+//initGallery();
+pintarCursos( cursos );
 
 const promesa = ajax("GET", endpoint, undefined);
 promesa
 .then( data => {
         console.trace('promesa resolve'); 
-        personas = data;
-        pintarLista( personas );
+        cursos = data;
+        pintarCursos( cursos );
 
 }).catch( error => {
         console.warn('promesa rejectada');
@@ -37,24 +32,33 @@ console.debug('continua la ejecuion del script de forma sincrona');
     
 } //init
 
-function pintarLista(arrayPersonas){
+function pintarCursos(arrayCursos){
 
 
-        let lista=document.getElementById('alumnos');
+        let lista=document.getElementById('cursos');
         lista.innerHTML ='';
-        arrayPersonas.forEach( (p,i) => lista.innerHTML += `<li>
-        <img src="img/${p.avatar}" alt="avatar">${p.nombre}
-        <div class="row justify-content-end">
-        <i class="fas fa-pencil-ruler" onclick="seleccionar(${i})"></i>
-        <i class="fas fa-trash" onclick="eliminar(${i})"></i></div> 
-        </li>`);
+        arrayCursos.forEach( (p,i) => lista.innerHTML += `
+        <td class= "align-self-center">
+        <img src="img/${p.imagen}" alt="imagen">
+         </td>
+         <td class= "align-self-center">
+             ${p.id}
+         </td>
+         <td class= "align-self-center">
+             ${p.titulo}
+         </td>
+         <td class= "align-self-center">
+             ${p.precio}
+         </td>`);
+
+                                            
 
 
   
      }
     
 
-function listener(){
+/*function listener(){
 
 let selectorSexo = document.getElementById('selectorSexo');
 let inputNombre = document.getElementById('inombre');
@@ -81,16 +85,16 @@ inputNombre.addEventListener('keyup', function(){
         pintarLista(personas);
          }    
     });
-}
+}*/
 
 
-function eliminar(indice){
-    let personaSeleccionada = personas[indice];
-    console.debug('click eliminar persona %o', personaSeleccionada);
-    const mensaje = `¿Estas seguro que quieres eliminar  a ${personaSeleccionada.nombre} ?`;
+/*function eliminar(indice){
+    let cursoSeleccionado = cursos[indice];
+    console.debug('click eliminar persona %o', cursoSeleccionada);
+    const mensaje = `¿Estas seguro que quieres eliminar  a ${cursoSeleccionado.titulo} ?`;
     if ( confirm(mensaje) ){
 
-        const url = endpoint + personaSeleccionada.id;
+        const url = endpoint + personSeleccionada.id;
         ajax('DELETE', url, undefined)
         .then( data => {
                     // conseguir de nuevo todos los alumnos
@@ -113,51 +117,38 @@ function eliminar(indice){
 
         }
 
-    }
+    }*/
 
-function seleccionar(indice){
+/*function seleccionar(indice){
 
-    let  personaSeleccionada = { "id":0, "nombre": "sin nombre" , "avatar" : "avatar7.png", "sexo": "h" };
+    let  cursoSeleccionado = { "id":0, "titulo": "sin titulo" , "imagen" : "imagen1.png", "seprecio": 0 };
 
     if ( indice > -1 ){
-        personaSeleccionada = personas[indice];
+        cursoSeleccionado = cursos[indice];
     }
     
-    console.debug('click guardar persona %o', personaSeleccionada);
+    console.debug('click guardar persona %o', cursoSeleccionado);
    
     //rellernar formulario
-    document.getElementById('inputId').value     = personaSeleccionada.id;
+    /*document.getElementById('inputId').value     = personaSeleccionada.id;
     document.getElementById('inputNombre').value = personaSeleccionada.nombre;
     document.getElementById('guardarSexo').value = personaSeleccionada.sexo;
-    document.getElementById('inputAvatar').value = personaSeleccionada.avatar;
+    document.getElementById('inputAvatar').value = personaSeleccionada.avatar;*/
 
     //seleccionar Avatar
-    const avatares = document.querySelectorAll('#gallery img');
+    /*const imagenes = document.querySelectorAll('#gallery img');
     avatares.forEach( el => {
         el.classList.remove('selected');
-        if ( "img/"+personaSeleccionada.avatar == el.dataset.path ){
+        if ( "img/"+cursoSeleccionado.imagen == el.dataset.path ){
             el.classList.add('selected');
         }
     });
 
-       /*
-    let select = document.getElementById('inputSexo');
-    const sexo = personaSeleccionada.sexo;
-    switch( sexo ){
-        case "h":
-            select.item(1).selected = "selected";
-            break;
-        case "m":
-            select.item(2).selected = "selected";
-            break;
-        default:
-            select.item(0).selected = "selected";
-    }
-    */
+       
 
-}
+}*/
 
-function guardar(){
+/*function guardar(){
 
     console.trace('click guardar');
     const id = document.getElementById('inputId').value;
@@ -182,14 +173,7 @@ function guardar(){
       
         ajax('POST',endpoint, persona)
             .then( data => {
-
-                alert( persona.nombre + ' ya esta con nosotros ');
-                //limpiar formulario
-                document.getElementById('inputId').value = 0;
-                document.getElementById('inputNombre').value = '';               
-                document.getElementById('inputAvatar').value = 'img/avatar1.png';
-                document.getElementById('guardarSexo').value = 't';
-                
+ 
                     // conseguir de nuevo todos los alumnos
                     ajax("GET", endpoint, undefined)               
                     .then( data => {
@@ -207,7 +191,7 @@ function guardar(){
             })
             .catch( error => {
                 console.warn('promesa rejectada');
-                alert(error.informacion);
+                alert(error);
             });
         
 
@@ -234,22 +218,18 @@ function guardar(){
             })
             .catch( error => {
                 console.warn('No se pudo actualizar');
-                alert(error.informacion);
+                alert(error);
             });
         
     }
 
-}
+}*/
 
 
-function busqueda( sexo = 't', nombreBuscar = '' ){
-
-    console.info('Busqueda sexo %o nombre %o', sexo, nombreBuscar );
-}
 
 
 //Cargar avatares
-function initGallery(){
+/*function initGallery(){
     let divGallery =  document.getElementById('gallery');
     for ( let i = 1; i <= 7 ; i++){
         divGallery.innerHTML += `<img onclick="selectAvatar(event)" 
@@ -272,9 +252,4 @@ function selectAvatar(evento){
     //@see: https://developer.mozilla.org/es/docs/Learn/HTML/como/Usando_atributos_de_datos
     iAvatar.value = evento.target.dataset.path;
 
-}
-
-
-
-    
-
+}*/

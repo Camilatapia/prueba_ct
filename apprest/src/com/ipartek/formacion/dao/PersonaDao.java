@@ -14,7 +14,7 @@ import com.ipartek.formacion.dao.ConnectionManager;
 
 public class PersonaDao implements IDAO<Persona> {
 
-private static final Logger LOGGER = Logger.getLogger(PersonaDao.class.getCanonicalName());
+	private static final Logger LOGGER = Logger.getLogger(PersonaDao.class.getCanonicalName());
 	
 	private static PersonaDao INSTANCE = null;
 	
