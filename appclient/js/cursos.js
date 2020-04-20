@@ -1,6 +1,6 @@
 "use strict";
 // este array se carga de forma asincrona mediante Ajax
-const endpoint = 'http://localhost:8080/apprestct/api/cursos/';
+const endpoint2 = 'http://localhost:8080/apprestct/api/cursos/';
 //const endpoint = 'http://127.0.0.1:5500/appclient/js/data/personas.json';
 let cursos =[];
 
@@ -15,7 +15,7 @@ console.debug('Document Load and Ready');
 //initGallery();
 pintarCursos( cursos );
 
-const promesa = ajax("GET", endpoint, undefined);
+const promesa = ajax("GET", endpoint2, undefined);
 promesa
 .then( data => {
         console.trace('promesa resolve'); 
@@ -57,6 +57,8 @@ function pintarCursos(arrayCursos){
   
      }
     
+
+
 
 /*function listener(){
 

@@ -16,7 +16,7 @@ private static final Logger LOGGER = Logger.getLogger(CursoDao.class.getCanonica
 	
 	private static CursoDao INSTANCE = null;
 	
-	private static String SQL_GET_ALL   = "SELECT id, titulo, imagen, precio FROM curso ORDER BY id ASC LIMIT 500; ";
+	private static String SQL_GET_ALL   = "SELECT id, titulo, imagen, precio FROM curso ORDER BY id ASC LIMIT 100; ";
 	private static String SQL_GET_BY_ID = "SELECT id, titulo, imagen, precio FROM curso WHERE id = ?; ";
 	private static String SQL_DELETE    = "DELETE FROM curso WHERE id = ?; ";
 	private static String SQL_INSERT    = "INSERT INTO curso (titulo, imagen, precio) VALUES ( ?, ?, ? ); ";

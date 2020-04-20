@@ -14,19 +14,21 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.ipartek.formacion.dao.CursoDao;
 import com.ipartek.formacion.model.Curso;
+import com.ipartek.formacion.model.Persona;
 
 @Path("/cursos")
 @Produces("application/json")
 @Consumes("application/json")
 public class CursoController {
 
-	private static final Logger LOGGER = Logger.getLogger(PersonaController.class.getCanonicalName());
+	private static final Logger LOGGER = Logger.getLogger(CursoController.class.getCanonicalName());
 	private static CursoDao cursoDAO = CursoDao.getInstance();
 
 	private ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
@@ -42,9 +44,23 @@ public class CursoController {
 	@GET
 	public ArrayList<Curso> getAll() {
 		LOGGER.info("getAll");		
-		// return cursos;
+		// return personas;
 		ArrayList<Curso> registros = (ArrayList<Curso>) cursoDAO.getAll(); 
-		return registros;
+		return registros;	
+		// return cursos;
+		/*if(filtro==null || filtro =="") {
+			ArrayList<Curso> registros = new ArrayList<Curso>; 
+			personaDAO.getAll(); 
+			
+			return registros;
+		return (Response) cursoDAO.getAll();
+		
+		
+		}else {
+			String result = String.format("filtro =%s", filtro);
+			return Response.ok(result).build();
+		}*/
+		
 	}
 	
 	@DELETE
