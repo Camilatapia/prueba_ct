@@ -3,6 +3,13 @@
 const endpoint = 'http://localhost:8080/apprestct/api/personas/';
 //const endpoint = 'http://127.0.0.1:5500/appclient/js/data/personas.json';
 let personas =[];
+let cursos=[];
+let personaSeleccionada = { "id":0, 
+                        "nombre": "sin nombre" , 
+                        "avatar" : "img/avatar7.png", 
+                        "sexo": "h",
+                        "cursos": []
+                        };
 
 let titulos = document.getElementsByTagName('h1');
 for(let i=0; i < titulos.length ; i++ ){
@@ -18,7 +25,10 @@ console.debug('Document Load and Ready');
 listener();
 
 initGallery();
+
 pintarLista( personas );
+//al abrir ventana modal
+pintarCursos();
 
 const promesa = ajax("GET", endpoint, undefined);
 promesa
@@ -45,8 +55,9 @@ function pintarLista(arrayPersonas){
         arrayPersonas.forEach( (p,i) => lista.innerHTML += `<li>
         <img src="img/${p.avatar}" alt="avatar">${p.nombre}
         <div class="row justify-content-end">
-        <i class="fas fa-pencil-ruler" onclick="seleccionar(${i})"></i>
-        <i class="fas fa-trash" onclick="eliminar(${i})"></i></div> 
+        <span class="fright" >${p.cursos.length} cursos</span>
+        <i class="fas fa-pencil-ruler" onclick="seleccionar(${p.id})"></i>
+        <i class="fas fa-trash" onclick="eliminar(${p.id})"></i></div> 
         </li>`);
 
 
@@ -56,6 +67,7 @@ function pintarLista(arrayPersonas){
 
 function listener(){
 
+    //1) buscar persona por sexo o nombre
 let selectorSexo = document.getElementById('selectorSexo');
 let inputNombre = document.getElementById('inombre');
 
@@ -81,11 +93,49 @@ inputNombre.addEventListener('keyup', function(){
         pintarLista(personas);
          }    
     });
-}
+
+      // 2 filtro de cursos
+      let filtroCursos = document.getElementById('filtroCurso');
+      filtroCursos.addEventListener('keyup',  function(event) {
+          let filtroValor = filtroCursos.value.trim();        
+          if ( filtroValor.length >= 3 ){
+              console.debug('filtroCursos keyup ' + filtroValor );
+              pintarCursos(filtroValor);
+          }else{
+              pintarCursos();
+          }
+  
+      });
+
+     //3) Modal  
+    var modal = document.getElementById("modal");
+    var btn = document.getElementById("btnModal");    
+    var spanClose = document.getElementById("close");
+
+    // When the user clicks the button, open the modal 
+    btn.onclick = () =>  {
+    pintarCursos();
+    modal.style.display = "block";
+    modal.classList.add('animated','zoomIn');
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    spanClose.onclick = () => {
+    modal.style.display = "none";        
+    }    
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = (event) => {
+        if (event.target == modal) {
+            modal.style.display = "none";            
+        }
+    }
+
+    }//listener
 
 
-function eliminar(indice){
-    let personaSeleccionada = personas[indice];
+function eliminar(id=0){
+    personaSeleccionada = personas.find( el => el.id == id);
     console.debug('click eliminar persona %o', personaSeleccionada);
     const mensaje = `¿Estas seguro que quieres eliminar  a ${personaSeleccionada.nombre} ?`;
     if ( confirm(mensaje) ){
@@ -101,8 +151,8 @@ function eliminar(indice){
                             pintarLista( personas );
                 
                     }).catch( error => {
-                            console.warn('promesa rejectada');
-                            alert(error);
+                            console.warn('promesa rejectada %o' , error);
+                            alert(error.informacion);
                     });
 
                     })
@@ -115,13 +165,29 @@ function eliminar(indice){
 
     }
 
-function seleccionar(indice){
+    /**
+ * 
+ * Se ejecuta al pulsar el boton de editar(al lado de la papelera) o boton 'Nueva Persona' 
+ * Rellena el formulario con los datos de la persona
+ * @param {*} id  id del alumno, si no existe en el array usa personaSeleccionada
+ * @see personaSeleccionada = { "id":0, "nombre": "sin nombre" , "avatar" : "img/avatar7.png", "sexo": "h" };
+ */
+function seleccionar(id=0){
 
-    let  personaSeleccionada = { "id":0, "nombre": "sin nombre" , "avatar" : "avatar7.png", "sexo": "h" };
+    let cntFormulario = document.getElementById('content-formulario');
+    cntFormulario.style.display = 'block';
+    cntFormulario.classList.add('animated','fadeInRight');
 
-    if ( indice > -1 ){
-        personaSeleccionada = personas[indice];
+    // para buscar por indice usar find
+    personaSeleccionada = personas.find( el=> el.id == id);
+    if ( !personaSeleccionada ){
+        personaSeleccionada = { "id":0, 
+                                "nombre": "sin nombre" ,
+                                 "avatar" : "avatar7.png",
+                                  "sexo": "h",
+                                  "cursos": [] };
     }
+   
     
     console.debug('click guardar persona %o', personaSeleccionada);
    
@@ -138,24 +204,20 @@ function seleccionar(indice){
         if ( "img/"+personaSeleccionada.avatar == el.dataset.path ){
             el.classList.add('selected');
         }
-    });
+    });  
 
-       /*
-    let select = document.getElementById('inputSexo');
-    const sexo = personaSeleccionada.sexo;
-    switch( sexo ){
-        case "h":
-            select.item(1).selected = "selected";
-            break;
-        case "m":
-            select.item(2).selected = "selected";
-            break;
-        default:
-            select.item(0).selected = "selected";
-    }
-    */
+    // pintar cursos del alumno
+   let listaCursosAlumno = document.getElementById('cursosAlumno');
+   listaCursosAlumno.innerHTML = '';
+   personaSeleccionada.cursos.forEach( el => {
 
-}
+       listaCursosAlumno.innerHTML += `<li>
+                                           ${el.titulo}
+                                           <i class="fas fa-trash" onclick="eliminarCurso(event, ${personaSeleccionada.id},${el.id})"></i>
+                                       </li>`;
+
+   });
+}//seleccionar
 
 function guardar(){
 
@@ -208,10 +270,8 @@ function guardar(){
             .catch( error => {
                 console.warn('promesa rejectada');
                 alert(error.informacion);
-            });
-        
-
-    // Modificar una persona
+            });//acaba crear persona nueva
+   // Modificar una persona
     }else{
         console.trace('Modificar persona');
 
@@ -237,9 +297,9 @@ function guardar(){
                 alert(error.informacion);
             });
         
-    }
+    }//modificar persona
 
-}
+}//funciones del boton guardar
 
 
 function busqueda( sexo = 't', nombreBuscar = '' ){
@@ -257,7 +317,7 @@ function initGallery(){
                                       data-path="avatar${i}.png"
                                       src="img/avatar${i}.png">`;
     }
-}
+}//initGallery: cargar avatares
 
 //Seleccionar avatar 
 function selectAvatar(evento){
@@ -272,8 +332,117 @@ function selectAvatar(evento){
     //@see: https://developer.mozilla.org/es/docs/Learn/HTML/como/Usando_atributos_de_datos
     iAvatar.value = evento.target.dataset.path;
 
-}
+}//selectAvatar
 
+
+function pintarCursos( filtro = '' ){
+    console.trace('cargar cursos');   
+    const urlCursos = 'http://localhost:8080/apprestct/api/cursos/?filtro=' + filtro;
+    ajax( 'GET', urlCursos, undefined )
+        .then( data => {
+             cursos = data;
+             // cargar cursos en lista
+        let lista=document.getElementById('cursos');
+        lista.innerHTML ='';
+        cursos.forEach( el => lista.innerHTML += `
+        <td class= "align-self-center">
+        <img src="img/${el.imagen}" alt="imagen">
+         </td>
+         <td class= "align-self-center">
+         ${el.titulo}
+         </td>
+         <td class= "align-self-center">
+         <span>${el.precio} €</span>    
+         </td>
+         <td class= "align-self-center" onclick="asignarCurso( 0, ${el.id})" >[x] Asignar
+         </td>`);
+         seleccionar(personaSeleccionada.id);   
+        })
+        .catch( error => alert('No se pueden cargar cursos' + error));
+
+   }//pintarCursos
+
+   /**
+ * 
+ * @param {*} idPersona 
+ * @param {*} idCurso 
+ */
+function eliminarCurso( event, idPersona, idCurso ){
+
+    console.debug(`click eliminarCurso idPersona=${idPersona} idCurso=${idCurso}`);
+
+    const url = endpoint + idPersona + "/curso/" + idCurso;
+    ajax('DELETE', url, undefined)
+    .then( data => {
+        alert('Curso Eliminado');
+
+        event.target.parentElement.classList.add('animated', 'bounceOut');
+            
+            //llamada ajax para actualizar cursos.length de cada alumno
+            const promesa = ajax("GET", endpoint, undefined);
+            promesa
+            .then( data => {
+                    console.trace('promesa resolve'); 
+                    personas = data;
+                    pintarLista( personas );
+            
+            }).catch( error => {
+                    console.warn('promesa rejectada');
+                    alert(error);
+            });
+    })
+    .catch( error => alert(error));
+
+}//eliminarCurso
+
+/**
+ * 
+ * @param {*} idPersona 
+ * @param {*} idCurso 
+ */
+function asignarCurso( idPersona = 0, idCurso ){
+
+    idPersona = (idPersona != 0) ? idPersona : personaSeleccionada.id;
+
+    console.debug(`click asignarCurso idPersona=${idPersona} idCurso=${idCurso}`);
+
+    const url = endpoint + idPersona + "/curso/" + idCurso;
+    ajax('POST', url, undefined)
+    .then( data => {
+        alert('Curso Asignado');
+
+        // cerrar modal
+        document.getElementById("modal").style.display = 'none';
+
+        alert(data.informacion);
+
+        const curso = data.data;
+        // pintar curso al final de la lista        
+        let lista = document.getElementById('cursosAlumno');   
+        
+        lista.innerHTML +=    
+                            `<li class="animated bounceIn">
+                             ${curso.titulo}
+                            <i class="fas fa-trash" onclick="eliminarCurso(event, ${idPersona},${curso.id})"></i>    
+                            </li>`;
+       // lista.classList.add('animated', 'bounceIn', 'delay-1s');                            
+        
+            //llamada ajax para actualizar cursos.length de cada alumno
+            const promesa = ajax("GET", endpoint, undefined);
+            promesa
+            .then( data => {
+                    console.trace('promesa resolve'); 
+                    personas = data;
+                    pintarLista( personas );
+            
+            }).catch( error => {
+                    console.warn('promesa rejectada');
+                    alert(error);
+            });
+    })
+    .catch( error => alert(error));
+
+}//asignarCurso
 
 
     

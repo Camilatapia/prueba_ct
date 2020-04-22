@@ -6,8 +6,9 @@
     <title>Alumnos</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="vendors/animate.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/reset.css">
+     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
@@ -26,20 +27,24 @@
             <input type="search"  id="inombre"  placeholder="Escribe nombre">
         </div>
         <br>
+        <input type="button" class="btn btn-primary" value="Nueva Persona" onclick="seleccionar()">
+        
         <div class="row align-self-center">
-            <div class="col">
+        
+            <div class="col align-self-center">
+            <br>
                 <ul id="alumnos">
                     <!-- innerHTML -->
                     <li>Cargando....</li>     
             </ul>
             </div>
             
-            <div class="col w3-container">
-            <form>
+            <div id="content-formulario" class="col formulario" style="display:none">
+            
+                <form>
                 <div class="form-group">
                 <input class="form-control" type="text" id="inputId" placeholder="id" hidden>
-               
-            </div>
+                </div>
                 <div class="form-group">
                 <label for="inputNombre">Escribe nombre</label>
                 <br><br>
@@ -53,8 +58,8 @@
                     <option value="h">Hombre</option>
                     <option value="m">Mujer</option>
                 </select>
-                <br>
                 </div>
+                <br>
                 <div class="form-group">
                     <input type="text" class="form-control" id="inputAvatar" placeholder="url imagen" hidden>
                  </div>
@@ -63,46 +68,53 @@
                 </div>
                 <br>
                 <input type="button" class="btn btn-primary" value="Guardar" onclick="guardar()">
-                <input type="button" class="btn btn-primary" value="Nueva Persona" onclick="seleccionar()">
-                <input type="button" class="btn btn-primary w3-button" value="Cursos" onclick="document.getElementById('id01').style.display='block'">
-            </form> 
-            
-            
-              <div id="id01" class="w3-modal">
-                <div class="w3-modal-content">
-                  <header class="w3-container w3-teal"> 
-                    <span onclick="document.getElementById('id01').style.display='none'" 
-                    class="w3-button w3-display-topright">&times;</span>
-                    <h2>Listado cursos</h2>
-                  </header>
-                  <div class="w3-container">
-                    <table id="cursos" class="table">
-                        <tr>
-                            <tr>
-                                <th>Imagen</th>
-                                <th>Id</th>
-                                <th>Titulo</th>
-                                <th>Precio</th>
-                              </tr>
-                        </tr>
-                      </table>
-                  </div>
-                  <footer class="w3-container w3-teal">
-                    <p>Copyright 2020</p>
-                  </footer>
-                </div>
-              </div>
-
-              
+                <input id="btnModal" type="button" class="btn btn-primary" value="Añadir cursos">
+            </form>
             </div>
+            <div class="col">
+                <h2>Cursos</h2>
+                <ol id="cursosAlumno">
+                    <li>sin cursos</li>
+                </ol>
+            </div>
+        
+         
+            <!-- col-60 formulario -->
            
         </div>
             
     </main>
+    <div id="modal" class="w3-modal">
+        <div class="w3-modal-content">
+        <header class="w3-container w3-teal"> 
+        <span id="close" class="w3-button w3-display-topright">&times;</span>
+        <h2>Listado cursos</h2>
+        </header>
+        <div class="w3-container">
+            <div class="content-filtro">
+            <i class="fas fa-search justify-content-start"><input type="search" id="filtroCurso" placeholder="Escribe nombre del curso"></i>             
+            </div>
+            <br>
+            <table id="cursos" class="table">
+                <tr>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Id</th>
+                        <th>Titulo</th>
+                        <th>Precio</th>
+                      </tr>
+                </tr>
+              </table>
+          </div>
+        <footer class="w3-container w3-teal">
+        <p>Copyright 2020</p>
+        </footer>
+        </div>
+      </div>
 
 
     <script src="js/ajax.js"></script>
-    <script src="js/cursos.js"></script>
+   
     <script src="js/main.js"></script>
     
 </body>

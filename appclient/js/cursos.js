@@ -13,7 +13,7 @@ console.debug('Document Load and Ready');
 //listener();
 
 //initGallery();
-pintarCursos( cursos );
+pintarCursos(cursos);
 
 const promesa = ajax("GET", endpoint2, undefined);
 promesa

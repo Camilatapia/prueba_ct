@@ -42,26 +42,25 @@ public class CursoController {
 	}
 
 	@GET
-	public ArrayList<Curso> getAll() {
-		LOGGER.info("getAll");		
-		// return personas;
-		ArrayList<Curso> registros = (ArrayList<Curso>) cursoDAO.getAll(); 
-		return registros;	
-		// return cursos;
-		/*if(filtro==null || filtro =="") {
-			ArrayList<Curso> registros = new ArrayList<Curso>; 
-			personaDAO.getAll(); 
+	public Response getAll( @QueryParam("filtro") String filtro ) {
+		
+		LOGGER.info("getAll " + filtro);		
+		ArrayList<Curso> registros = new ArrayList<Curso>(); 
+		
+		
+		if ( filtro != null && !"".equals(filtro.trim())) {
+			registros = (ArrayList<Curso>) cursoDAO.getAllLikeNombre(filtro);
 			
-			return registros;
-		return (Response) cursoDAO.getAll();
-		
-		
 		}else {
-			String result = String.format("filtro =%s", filtro);
-			return Response.ok(result).build();
-		}*/
+			registros = (ArrayList<Curso>) cursoDAO.getAll();			
+			
+		}
 		
+		Response response = Response.status(Status.OK).entity(registros).build();
+		
+		return response;
 	}
+	
 	
 	@DELETE
 	@Path("/{id: \\d+}")
