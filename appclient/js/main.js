@@ -1,6 +1,6 @@
 "use strict";
 // este array se carga de forma asincrona mediante Ajax
-const endpoint = 'http://localhost:8080/apprestct/api/personas/';
+const endpoint = 'http://localhost:8080/apprestct/api/';
 //const endpoint = 'http://127.0.0.1:5500/appclient/js/data/personas.json';
 let personas =[];
 let cursos=[];
@@ -29,8 +29,8 @@ initGallery();
 pintarLista( personas );
 //al abrir ventana modal
 pintarCursos();
-
-const promesa = ajax("GET", endpoint, undefined);
+const url = endpoint + 'personas/';
+const promesa = ajax("GET", url, undefined);
 promesa
 .then( data => {
         console.trace('promesa resolve'); 
@@ -140,11 +140,12 @@ function eliminar(id=0){
     const mensaje = `¿Estas seguro que quieres eliminar  a ${personaSeleccionada.nombre} ?`;
     if ( confirm(mensaje) ){
 
-        const url = endpoint + personaSeleccionada.id;
+        const url = endpoint + 'personas/' + personaSeleccionada.id;
         ajax('DELETE', url, undefined)
         .then( data => {
                     // conseguir de nuevo todos los alumnos
-                    ajax("GET", endpoint, undefined)               
+                    const urlPersonas = endpoint + 'personas/';
+                    ajax("GET", urlPersonas, undefined)               
                     .then( data => {
                             console.trace('promesa resolve'); 
                             personas = data;
@@ -241,8 +242,8 @@ function guardar(){
        //Crear nueva persona
        if ( id == 0 ){ 
         console.trace('Crear nueva persona');
-      
-        ajax('POST',endpoint, persona)
+        const urlPersonas = endpoint + 'personas/';      
+        ajax('POST',urlPersonas, persona)
             .then( data => {
 
                 alert( persona.nombre + ' ya esta con nosotros ');
@@ -253,7 +254,7 @@ function guardar(){
                 document.getElementById('guardarSexo').value = 't';
                 
                     // conseguir de nuevo todos los alumnos
-                    ajax("GET", endpoint, undefined)               
+                    ajax("GET", urlPersonas, undefined)               
                     .then( data => {
                             console.trace('promesa resolve'); 
                             personas = data;
@@ -274,13 +275,13 @@ function guardar(){
    // Modificar una persona
     }else{
         console.trace('Modificar persona');
-
-        const url = endpoint + persona.id;
+        const url = endpoint + 'personas/' + persona.id;
         ajax('PUT', url , persona)
             .then( data => {
  
                     // conseguir de nuevo todos los alumnos
-                    ajax("GET", endpoint, undefined)               
+                    const urlPersonas= endpoint + 'personas/';
+                    ajax("GET", urlPersonas, undefined)               
                     .then( data => {
                             console.trace('promesa resolve'); 
                             personas = data;
@@ -337,8 +338,8 @@ function selectAvatar(evento){
 
 function pintarCursos( filtro = '' ){
     console.trace('cargar cursos');   
-    const urlCursos = 'http://localhost:8080/apprestct/api/cursos/?filtro=' + filtro;
-    ajax( 'GET', urlCursos, undefined )
+    const urlCursos = endpoint + 'cursos/?filtro='  + filtro;
+       ajax( 'GET', urlCursos, undefined )
         .then( data => {
              cursos = data;
              // cargar cursos en lista
@@ -371,15 +372,16 @@ function eliminarCurso( event, idPersona, idCurso ){
 
     console.debug(`click eliminarCurso idPersona=${idPersona} idCurso=${idCurso}`);
 
-    const url = endpoint + idPersona + "/curso/" + idCurso;
+    const url = endpoint + 'personas/' + idPersona + "/curso/" + idCurso;
     ajax('DELETE', url, undefined)
     .then( data => {
         alert('Curso Eliminado');
 
-        event.target.parentElement.classList.add('animated', 'bounceOut');
+        
             
             //llamada ajax para actualizar cursos.length de cada alumno
-            const promesa = ajax("GET", endpoint, undefined);
+            const urlPersonas = endpoint + 'personas/';
+            const promesa = ajax("GET", urlPersonas, undefined);
             promesa
             .then( data => {
                     console.trace('promesa resolve'); 
@@ -390,6 +392,7 @@ function eliminarCurso( event, idPersona, idCurso ){
                     console.warn('promesa rejectada');
                     alert(error);
             });
+            event.target.parentElement.classList.add('animated', 'bounceOut');
     })
     .catch( error => alert(error));
 
@@ -406,7 +409,7 @@ function asignarCurso( idPersona = 0, idCurso ){
 
     console.debug(`click asignarCurso idPersona=${idPersona} idCurso=${idCurso}`);
 
-    const url = endpoint + idPersona + "/curso/" + idCurso;
+    const url = endpoint + 'personas/' + idPersona + "/curso/" + idCurso;
     ajax('POST', url, undefined)
     .then( data => {
         alert('Curso Asignado');
@@ -414,7 +417,7 @@ function asignarCurso( idPersona = 0, idCurso ){
         // cerrar modal
         document.getElementById("modal").style.display = 'none';
 
-        alert(data.informacion);
+        //alert(data.informacion);
 
         const curso = data.data;
         // pintar curso al final de la lista        
@@ -425,10 +428,11 @@ function asignarCurso( idPersona = 0, idCurso ){
                              ${curso.titulo}
                             <i class="fas fa-trash" onclick="eliminarCurso(event, ${idPersona},${curso.id})"></i>    
                             </li>`;
-       // lista.classList.add('animated', 'bounceIn', 'delay-1s');                            
+            // lista.classList.add('animated', 'bounceIn', 'delay-1s');                            
         
             //llamada ajax para actualizar cursos.length de cada alumno
-            const promesa = ajax("GET", endpoint, undefined);
+            const urlPersonas = endpoint + 'personas/';
+            const promesa = ajax("GET", urlPersonas, undefined);
             promesa
             .then( data => {
                     console.trace('promesa resolve'); 
