@@ -10,9 +10,11 @@ AppCliente es una API que representa el diseño gráfico y formato de nuestra ap
 
 Explicación general de los dos proyectos 
 
-##Tecnología usada 
-####AppRest: Java JAX-RS
-###AppCliente: Html5, CSS3, Javascript
+## Tecnología usada 
+#### AppRest: 
+Java JAX-RS
+### AppCliente: 
+Html5, CSS3, Javascript
 
 
 
@@ -28,6 +30,10 @@ Configuración ( conexión a bbdd y logs )
 
 Detalle API rest con llamadas 
 
-##Tags o Versiones 
+## Tags o Versiones:  
+### Version V.1.0: 
+API para gestionar información de alumnos: Buscar alumno existente, modificar sus datos, crear alumnos nuevos o eliminar
+### Version V.2.0:
+API para gestionar información de alumnos y sus cursos asociados. Mantiene operaciones de versión anteriro y se añade la asignación o eliminación de cursos comprados por cada alumno.
 
-Listar las versiones más importantes y describir su motivo 
+
