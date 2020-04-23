@@ -1,49 +1,68 @@
 package com.ipartek.formacion.model;
 
-public class Ccomprado {
 
-	private int id_persona;
-	private int id_curso;
+
+public class Noticia {
+
+	private int id;
+	private String titulo;
+	private String fecha;
+	private String contenido;
 	
-	public Ccomprado() {
+	public Noticia() {
 		super();
-		this.id_persona = 0;
-		this.id_curso = 0;	
-	}
+		this.id = 0;
+		this.titulo = "";		
+		this.fecha = "";
+		this.contenido = "";
 		
-
-	public Ccomprado(int id_persona, int id_curso) {		
-		this();
-		this.id_persona = id_persona;
-		this.id_curso = id_curso;
+	}
 	
+	public Noticia(int id, String titulo, String fecha, String contenido) {
+		this();
+		this.id = id;
+		this.titulo = titulo;
+		this.fecha = fecha;
+		this.contenido = contenido;
 	}
 
-
-	public int getId_persona() {
-		return id_persona;
+	public int getId() {
+		return id;
 	}
 
-
-	public void setId_persona(int id_persona) {
-		this.id_persona = id_persona;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-
-	public int getId_curso() {
-		return id_curso;
+	public String getTitulo() {
+		return titulo;
 	}
 
-
-	public void setId_curso(int id_curso) {
-		this.id_curso = id_curso;
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
+	public String getContenido() {
+		return contenido;
+	}
+
+	public void setContenido(String contenido) {
+		this.contenido = contenido;
+	}
 
 	@Override
 	public String toString() {
-		return "Ccomprado [id_persona=" + id_persona + ", id_curso=" + id_curso + "]";
+		return "Noticia [id=" + id + ", titulo=" + titulo + ", fecha=" + fecha + ", contenido=" + contenido + "]";
 	}
-
 	
-}
+	
+	
+	}

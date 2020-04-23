@@ -11,12 +11,6 @@ let personaSeleccionada = { "id":0,
                         "cursos": []
                         };
 
-let titulos = document.getElementsByTagName('h1');
-for(let i=0; i < titulos.length ; i++ ){
-        let p = titulos[i];
-        p.style.color = 'white';
-        
-    }
 
 window.addEventListener('load', init() );
 

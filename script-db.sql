@@ -47,7 +47,27 @@ CREATE TABLE IF NOT EXISTS `curso_comprado` (
 
 -- Volcando datos para la tabla alumnos.curso_comprado: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `curso_comprado` DISABLE KEYS */;
+REPLACE INTO `curso_comprado` (`id_persona`, `id_curso`) VALUES
+	(2, 3),
+	(1, 4),
+	(2, 4);
 /*!40000 ALTER TABLE `curso_comprado` ENABLE KEYS */;
+
+-- Volcando estructura para tabla alumnos.noticia
+CREATE TABLE IF NOT EXISTS `noticia` (
+  `id` int NOT NULL,
+  `titulo` varchar(50) NOT NULL DEFAULT '',
+  `fecha` varchar(50) NOT NULL DEFAULT '',
+  `contenido` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Volcando datos para la tabla alumnos.noticia: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `noticia` DISABLE KEYS */;
+REPLACE INTO `noticia` (`id`, `titulo`, `fecha`, `contenido`) VALUES
+	(1, 'Euskadi solo reabrirá las aulas mínimas', '20/05/2020', 'Educación restringe las posibles clases en lo que queda de curso a 4º de la ESO, Bachiller y FP. El trimestre del virus contará si es para mejorar las calificaciones y la repetición de curso exigirá un informe'),
+	(2, 'Educación descarta clases en verano', '22/04/2020', 'En Euskadi se mantiene el 30 de junio como último día de clase y los contenidos que no se den se podrán recuperar el próximo curso ');
+/*!40000 ALTER TABLE `noticia` ENABLE KEYS */;
 
 -- Volcando estructura para tabla alumnos.persona
 CREATE TABLE IF NOT EXISTS `persona` (

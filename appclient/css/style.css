@@ -9,7 +9,8 @@ h1{
     text-align: center;
     padding: 10px 5px;
     font-size: 1.5em;
-    margin-top: 5px;  
+    margin-top: 5px; 
+    color: white; 
     
 }
 
@@ -55,13 +56,12 @@ input[type="button"]{
 
         table {
           font-family: arial, sans-serif;
-          
           border-collapse: collapse;
           width: 100%;
         }
         
         td {
-          border: 1px solid #94cfeb;
+          
           text-align: center;
           padding: 3px;
         }
