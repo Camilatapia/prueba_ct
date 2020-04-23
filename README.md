@@ -6,13 +6,13 @@ Dos proyectos AppCliente ( HTML5, CSS3, JS ) y AppRest ( rest api con Java JAX-R
 ## AppClient
 1. Descripción:
 
-AppCliente es una API que representa el diseño gráfico y formato de nuestra aplicación web para gestionar la información de los alumnos. Mediante la identificación de la URI y Javascript se puede controlar el comportamiento de los diferentes elementos, aportando funacionalidad y dinamismo a cada elemento.
+    AppCliente es una API que representa el diseño gráfico y formato de nuestra aplicación web para gestionar la información de los alumnos. Mediante la identificación de la URI y Javascript se puede controlar el comportamiento de los diferentes elementos, aportando funacionalidad y dinamismo a cada elemento.
 
-La aplicación muestra el listado de alumnos permitiendo buscar un alumno por su sexo o nombre; En el botón "Nueva persona" se puede ingresar datos de un nuevo alumno, al seleccionar cada alumno se pueden visualizar sus datos y los cursos que ha comprado, los cuales pueden ser modificados.
+    La aplicación muestra el listado de alumnos permitiendo buscar un alumno por su sexo o nombre; En el botón "Nueva persona" se puede ingresar datos de un nuevo alumno, al seleccionar cada alumno se pueden visualizar sus datos y los cursos que ha comprado, los cuales pueden ser modificados.
 
-Para visualizar esta descripción haz click [aquí](https://github.com/Camilatapia/prueba_ct/blob/master/version2.png)
+    Para visualizar esta descripción haz click [aquí](https://github.com/Camilatapia/prueba_ct/blob/master/version2.png)
 
- Si haces click en "Añadir curso" se abre una ventana modal que permite asignar otro curso al alumno. Para ver haz click [aquí](https://github.com/Camilatapia/prueba_ct/blob/master/version%202-asignar.png)
+    Si haces click en "Añadir curso" se abre una ventana modal que permite asignar otro curso al alumno. Para ver haz click [aquí](https://github.com/Camilatapia/prueba_ct/blob/master/version%202-asignar.png)
 
 2. Tecnología utilizada: Html5, CSS3, Javascript 
 
