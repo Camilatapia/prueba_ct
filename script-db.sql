@@ -37,22 +37,16 @@ REPLACE INTO `curso` (`id`, `titulo`, `imagen`, `precio`) VALUES
 
 -- Volcando estructura para tabla alumnos.curso_comprado
 CREATE TABLE IF NOT EXISTS `curso_comprado` (
-  `id_curso` int NOT NULL,
   `id_persona` int NOT NULL,
+  `id_curso` int NOT NULL,
+  PRIMARY KEY (`id_persona`,`id_curso`) USING BTREE,
   KEY `id_curso` (`id_curso`),
-  KEY `id_persona` (`id_persona`),
-  CONSTRAINT `id_curso` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `id_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `id_curso` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id`),
+  CONSTRAINT `id_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla alumnos.curso_comprado: ~5 rows (aproximadamente)
+-- Volcando datos para la tabla alumnos.curso_comprado: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `curso_comprado` DISABLE KEYS */;
-REPLACE INTO `curso_comprado` (`id_curso`, `id_persona`) VALUES
-	(1, 1),
-	(2, 1),
-	(3, 2),
-	(4, 2),
-	(1, 4);
 /*!40000 ALTER TABLE `curso_comprado` ENABLE KEYS */;
 
 -- Volcando estructura para tabla alumnos.persona
@@ -63,15 +57,15 @@ CREATE TABLE IF NOT EXISTS `persona` (
   `sexo` varchar(10) NOT NULL DEFAULT '',
   UNIQUE KEY `nombre` (`nombre`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Volcando datos para la tabla alumnos.persona: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `persona` DISABLE KEYS */;
 REPLACE INTO `persona` (`id`, `nombre`, `avatar`, `sexo`) VALUES
-	(1, 'Camy', 'avatar2.png', 'm'),
+	(1, 'Camylita', 'avatar2.png', 'm'),
 	(2, 'El Loli', 'avatar3.png', 'h'),
-	(4, 'Rosita', 'avatar5.png', 'm'),
 	(5, 'Sam', 'avatar6.png', 'h'),
+	(4, 'Sra Rosita', 'avatar5.png', 'm'),
 	(8, 'Txejo', 'avatar7.png', 'h');
 /*!40000 ALTER TABLE `persona` ENABLE KEYS */;
 
