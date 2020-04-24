@@ -5,6 +5,7 @@ package com.ipartek.formacion.model;
 import java.util.ArrayList;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class Persona {
@@ -22,22 +23,26 @@ public class Persona {
 	private String sexo;
 	private ArrayList<Curso> cursos;
 	
+	@NotNull
+	private Rol rol;
+	
 	public Persona() {
 		super();
 		this.id = 0;
 		this.nombre = "";		
 		this.avatar = "avatar1.png";
 		this.sexo = "";
+		this.rol = new Rol();
 		this.cursos = new ArrayList<Curso>();
 	}
 
-	public Persona(int id, String nombre, String avatar, String sexo) {		
+	public Persona(int id, String nombre, String avatar, String sexo, Rol rol) {		
 		this();
 		this.id = id;
 		this.nombre = nombre;
 		this.avatar = avatar;
 		this.sexo = sexo;
-		
+		this.rol = rol;
 	}
 
 	public int getId() {
@@ -80,11 +85,21 @@ public class Persona {
 		this.cursos = cursos;
 	}
 
+	public Rol getRol() {
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
+
 	@Override
 	public String toString() {
 		return "Persona [id=" + id + ", nombre=" + nombre + ", avatar=" + avatar + ", sexo=" + sexo + ", cursos="
-				+ cursos + "]";
+				+ cursos + ", rol=" + rol + "]";
 	}
+
+	
 
 	
 }
