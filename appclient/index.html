@@ -84,33 +84,30 @@
         </div>
             
     </main>
-    <div id="modal" class="w3-modal">
-        <div class="w3-modal-content">
-        <header class="w3-container w3-teal"> 
-        <span id="close" class="w3-button w3-display-topright">&times;</span>
-        <h2>Listado cursos</h2>
-        </header>
-        <div class="w3-container">
-            <div class="content-filtro">
-            <i class="fas fa-search justify-content-start"><input type="search" id="filtroCurso" placeholder="Escribe nombre del curso"></i>             
-            </div>
-            <br>
-            <table id="cursos" class="table">
-                <tr>
+   
+
+    <div id="modal" class="modal">
+      <!-- Modal content -->
+        <div class="modal-content">
+            <span id="close" class="close" style="justify-content: end;">&times;</span>
+            <h2>Listado Cursos</h2>
+                <div class="content-filtro">              
+                <input type="search" id="filtroCurso" placeholder="Buscar curso por nombre">                
+                </div>
+                <div class="table-responsive">
+                    <table id="cursos" class="table">
                     <tr>
-                        <th>Imagen</th>
-                        <th>Id</th>
-                        <th>Titulo</th>
-                        <th>Precio</th>
-                      </tr>
-                </tr>
-              </table>
-          </div>
-        <footer class="w3-container w3-teal">
-        <p>Copyright 2020</p>
-        </footer>
-        </div>
-      </div>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Id</th>
+                            <th>Titulo</th>
+                            <th>Precio</th>
+                        </tr>
+                    </tr>
+                    </table>
+                 </div>
+         </div>
+    </div>
 
 
     <script src="js/ajax.js"></script>

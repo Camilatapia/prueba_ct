@@ -32,7 +32,11 @@ REPLACE INTO `curso` (`id`, `titulo`, `imagen`, `precio`) VALUES
 	(1, 'Programacion', 'imagen1.png', 100),
 	(2, 'Física', 'imagen2.png', 150),
 	(3, 'Matemáticas', 'imagen3.png', 200),
-	(4, 'Algebra', 'imagen4.png', 250);
+	(4, 'Algebra', 'imagen4.png', 250),
+	(5, 'Cálculo', 'imagen1.png', 300),
+	(6, 'Biología', 'imagen1.png', 310),
+	(7, 'Química', 'imagen1.png', 280),
+	(8, 'Inglés', 'imagen1.png', 220);
 /*!40000 ALTER TABLE `curso` ENABLE KEYS */;
 
 -- Volcando estructura para tabla alumnos.curso_comprado
@@ -45,12 +49,13 @@ CREATE TABLE IF NOT EXISTS `curso_comprado` (
   CONSTRAINT `id_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla alumnos.curso_comprado: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alumnos.curso_comprado: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `curso_comprado` DISABLE KEYS */;
 REPLACE INTO `curso_comprado` (`id_persona`, `id_curso`) VALUES
 	(2, 3),
 	(1, 4),
-	(2, 4);
+	(2, 4),
+	(4, 4);
 /*!40000 ALTER TABLE `curso_comprado` ENABLE KEYS */;
 
 -- Volcando estructura para tabla alumnos.noticia
@@ -62,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `noticia` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla alumnos.noticia: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alumnos.noticia: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `noticia` DISABLE KEYS */;
 REPLACE INTO `noticia` (`id`, `titulo`, `fecha`, `contenido`) VALUES
 	(1, 'Euskadi solo reabrirá las aulas mínimas', '20/05/2020', 'Educación restringe las posibles clases en lo que queda de curso a 4º de la ESO, Bachiller y FP. El trimestre del virus contará si es para mejorar las calificaciones y la repetición de curso exigirá un informe'),
@@ -84,8 +89,8 @@ CREATE TABLE IF NOT EXISTS `persona` (
 REPLACE INTO `persona` (`id`, `nombre`, `avatar`, `sexo`) VALUES
 	(1, 'Camylita', 'avatar2.png', 'm'),
 	(2, 'El Loli', 'avatar3.png', 'h'),
+	(4, 'Rosita', 'avatar5.png', 'm'),
 	(5, 'Sam', 'avatar6.png', 'h'),
-	(4, 'Sra Rosita', 'avatar5.png', 'm'),
 	(8, 'Txejo', 'avatar7.png', 'h');
 /*!40000 ALTER TABLE `persona` ENABLE KEYS */;
 
