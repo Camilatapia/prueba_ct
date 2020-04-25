@@ -137,6 +137,9 @@ input[type="button"]{
       color: #FFF;
       padding: 10px;
       text-align: center;
+      height: 100px;
+      display:grid;
+      font-size: 30px;
   }
 
   .modal .content-filtro{

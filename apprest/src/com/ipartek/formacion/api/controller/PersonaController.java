@@ -171,8 +171,9 @@ public class PersonaController {
 			response = Response.status(Status.CREATED).entity(responseBody).build();
 			
 		} catch (Exception e) {			
-				responseBody.setInformacion(e.getMessage());
-				response = Response.status(Status.NOT_FOUND).entity(responseBody).build();
+				responseBody.setInformacion("Esta curso ya esta asignado");
+				response = Response.status(Status.CONFLICT).entity(responseBody).build();
+				
 		}
 
 		return response;
