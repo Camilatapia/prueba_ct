@@ -25,7 +25,7 @@ Dos proyectos AppClient ( HTML5, CSS3, JS ) y AppRest ( Rest api con Java JAX-RS
 
 ## AppRest:
 1. Descripción:
-AppRest es una API REST que permite gestionar los datos de los alumnos y los cursos que han comprado, para mayor detalle del modelo de los datos ver el [diagrama de entidad relación] (https://github.com/Camilatapia/prueba_ct/blob/master/diagrama.png). La API representa una interfaz uniforme que sistematiza el proceso con la información, es necesaria la identificación de una URI para realizar la transferencia de datos y ejecutar acciones del CRUD (POST, GET, PUT y DELETE).
+AppRest es una API REST que permite gestionar los datos de los alumnos y los cursos que han comprado, para mayor detalle del modelo de los datos ver el [diagrama de entidad relación](https://github.com/Camilatapia/prueba_ct/blob/master/diagrama.png). La API representa una interfaz uniforme que sistematiza el proceso con la información, es necesaria la identificación de una URI para realizar la transferencia de datos y ejecutar acciones del CRUD (POST, GET, PUT y DELETE).
 
 2. Tecnología usada: Java JAX-RS
 
