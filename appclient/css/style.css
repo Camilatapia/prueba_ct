@@ -53,18 +53,17 @@ input[type="button"]{
     filter: grayscale(0);
 }
 
-
-        table {
-          font-family: arial, sans-serif;
-          border-collapse: collapse;
-          width: 100%;
-        }
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+     }
         
-        td {
-          
-          text-align: center;
-          padding: 3px;
-        }
+    td {
+         
+    text-align: center;
+    padding: 3px;
+    }
         
 /* iconos */
 .fas{
@@ -160,9 +159,7 @@ input[type="button"]{
       height: 50px;
       width: 50px;
   } 
-
-   
-
+  
   .modal span{    
       color: #888;
   }    

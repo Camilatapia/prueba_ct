@@ -29,25 +29,23 @@ console.debug('continua la ejecuion del script de forma sincrona');
 } //init
 
 function pintarNoticias(arrayNoticias){
-
-
-        let lista=document.getElementById('noticias');
-        lista.innerHTML ='';
-        arrayNoticias.forEach( (p,i) => lista.innerHTML += `
-        <td class= "align-self-center">
+    let lista=document.getElementById('noticias');
+    lista.innerHTML ='';
+    arrayNoticias.forEach( (p,i) => lista.innerHTML += `
+       <td class= "align-self-center">
             ${p.id}
-         </td>
-         <td class= "align-self-center">
+        </td>
+        <td class= "align-self-center">
             ${p.fecha}
-         </td>
-         <td class= "align-self-center">
-             ${p.titulo}
-         </td>
-         <td class= "align-self-center">
-             ${p.contenido}
-         </td>`);
+        </td>
+        <td class= "align-self-center">
+            ${p.titulo}
+        </td>
+        <td class= "align-self-center">
+            ${p.contenido}
+        </td>`);
  
-     }
+    }
     
    
 
