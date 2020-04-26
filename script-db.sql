@@ -49,16 +49,15 @@ CREATE TABLE IF NOT EXISTS `curso_comprado` (
   CONSTRAINT `id_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla alumnos.curso_comprado: ~7 rows (aproximadamente)
+-- Volcando datos para la tabla alumnos.curso_comprado: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `curso_comprado` DISABLE KEYS */;
 REPLACE INTO `curso_comprado` (`id_persona`, `id_curso`) VALUES
-	(1, 1),
 	(1, 2),
 	(1, 3),
 	(2, 3),
-	(1, 4),
 	(2, 4),
-	(4, 4);
+	(4, 4),
+	(1, 8);
 /*!40000 ALTER TABLE `curso_comprado` ENABLE KEYS */;
 
 -- Volcando estructura para tabla alumnos.noticia
@@ -85,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `persona` (
   `sexo` varchar(10) NOT NULL DEFAULT '',
   UNIQUE KEY `nombre` (`nombre`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Volcando datos para la tabla alumnos.persona: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `persona` DISABLE KEYS */;
@@ -96,20 +95,6 @@ REPLACE INTO `persona` (`id`, `nombre`, `avatar`, `sexo`) VALUES
 	(5, 'Sam', 'avatar6.png', 'h'),
 	(8, 'Txejo', 'avatar7.png', 'h');
 /*!40000 ALTER TABLE `persona` ENABLE KEYS */;
-
--- Volcando estructura para tabla alumnos.rol
-CREATE TABLE IF NOT EXISTS `rol` (
-  `id` int NOT NULL,
-  `nombre` varchar(50) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Volcando datos para la tabla alumnos.rol: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `rol` DISABLE KEYS */;
-REPLACE INTO `rol` (`id`, `nombre`) VALUES
-	(1, 'Profesor'),
-	(2, 'Alumno');
-/*!40000 ALTER TABLE `rol` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

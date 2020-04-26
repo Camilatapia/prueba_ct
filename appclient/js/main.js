@@ -163,7 +163,7 @@ function eliminar(id=0){
                 })
         .catch( error => {
                     console.warn('promesa rejectada');
-                    alert(error);
+                    alert(error.informacion);
                     });
         }
     }//eliminar
