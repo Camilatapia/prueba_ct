@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ipartek.formacion.model.Curso;
@@ -44,6 +45,18 @@ private static String SQL_GET_BY_ID = "SELECT \n" +
 			"	c.imagen  as curso_imagen\n" + 
 			" FROM (persona p LEFT JOIN curso_comprado cc ON p.id = cc.id_persona)\n" + 
 			"     LEFT JOIN curso c ON cc.id_curso = c.id WHERE p.id = ? ;   ";
+
+private static String SQL_GET_BY_NOMBRE = "SELECT \n" + 
+		"	p.id as persona_id,\n" + 
+		"	p.nombre as persona_nombre,\n" + 
+		"	p.avatar as persona_avatar,\n" + 
+		"	p.sexo as persona_sexo,\n" + 
+		"	c.id as curso_id,\n" + 
+		"	c.titulo as curso_nombre,\n" + 
+		"	c.precio as curso_precio,\n" + 
+		"	c.imagen  as curso_imagen\n" + 
+		" FROM (persona p LEFT JOIN curso_comprado cc ON p.id = cc.id_persona)\n" + 
+		"     LEFT JOIN curso c ON cc.id_curso = c.id WHERE p.nombre = ? ;   ";
 
 	private static String SQL_DELETE    = "DELETE FROM persona WHERE id = ?; ";
 	private static String SQL_INSERT    = "INSERT INTO persona (nombre, avatar, sexo) VALUES ( ?, ?, ? ); ";
@@ -291,6 +304,34 @@ private static String SQL_GET_BY_ID = "SELECT \n" +
 		return p;
 		
 		
+	}
+
+	@Override
+	public Persona getByNombre(String nombre) throws Exception {
+		Persona registro = null;
+		try (Connection con = ConnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_GET_BY_NOMBRE);
+		) {
+
+			pst.setString(1, nombre);
+			LOGGER.info(pst.toString());
+			
+			try( ResultSet rs = pst.executeQuery() ){
+			
+				HashMap<Integer, Persona> hmPersonas = new HashMap<Integer, Persona>();
+				if( rs.next() ) {					
+					registro = mapper(rs, hmPersonas);
+				}else {
+					throw new Exception("Registro no encontrado para nombre = " + nombre);
+				}
+			}
+			
+			
+		} catch (SQLException e) {
+			LOGGER.log(Level.SEVERE,"Excepcion de SQL", e);
+					}
+
+		return registro;
 	}
 }
 

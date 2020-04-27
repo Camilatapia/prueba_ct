@@ -15,12 +15,20 @@ public interface IDAO<P> {
 	List<P> getAll();
 	
 	/**
-	 * busca un pojo por su id
+	 * Busca un pojo por su id
 	 * @param id
 	 * @return
 	 * @throws Exception si no encuentra pojo
 	 */
 	P getById(int id) throws Exception;
+	
+	/**
+	 * Busca persona por el nombre (unique)
+	 * @param nombre String
+	 * @return Persona
+	 * @throws Exception si no la encuentra
+	 */
+	P getByNombre(String nombre) throws Exception;
 	
 	/**
 	 * Elimina pojo por su id

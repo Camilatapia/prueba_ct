@@ -87,4 +87,10 @@ public class NoticiaDao implements IDAO<Noticia> {
 		n.setContenido( rs.getString("contenido"));
 		return n;
 	}
+
+	@Override
+	public Noticia getByNombre(String nombre) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

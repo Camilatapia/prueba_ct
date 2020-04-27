@@ -158,6 +158,12 @@ public class CursoDao implements IDAO<Curso> {
 		c.setPrecio( rs.getInt("precio"));
 		return c;
 	}
+
+	@Override
+	public Curso getByNombre(String nombre) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }

@@ -31,7 +31,7 @@ promesa
 
 }).catch( error => {
         console.warn('promesa rejectada');
-        alert(error);
+        alert("Lo siento pero no se ha podido cargar la página");
 });
 
 console.debug('continua la ejecucion del script de forma sincrona');
@@ -130,6 +130,33 @@ function listener(){
             modal.style.display = "none";            
         }
     }
+
+    //4) filtro buscar persona por nombre
+    let iNombre = document.getElementById('inputNombre');
+    let nombreMensaje = document.getElementById('nombreMensaje');
+    iNombre.addEventListener('keyup',()=>{
+
+        console.debug('tecla pulsada ' + iNombre.value);
+
+        if ( personaSeleccionada.nombre != iNombre.value ){
+
+            const url = endpoint + 'personas/?filtro=' + iNombre.value;
+            ajax('GET', url, undefined)
+                .then( ( data ) => {
+                    console.debug('Nombre NO disponible');
+                    nombreMensaje.textContent = 'Nombre NO disponible';
+                    nombreMensaje.classList.add('invalid');
+                    nombreMensaje.classList.remove('valid');
+                })
+                .catch( ( error ) => {
+                    console.debug('Nombre disponible');
+                    nombreMensaje.textContent = 'Nombre disponible';
+                    nombreMensaje.classList.add('valid');
+                    nombreMensaje.classList.remove('invalid');
+                });
+        }     
+
+    });
 }//listener
 
 /**
@@ -166,7 +193,7 @@ function eliminar(id=0){
                     alert(error.informacion);
                     });
         }
-    }//eliminar
+    }//eliminar GIT
 
     /**
  * 

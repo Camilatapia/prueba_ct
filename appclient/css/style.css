@@ -64,6 +64,19 @@ table {
     text-align: center;
     padding: 3px;
     }
+
+.valid, .invalid {
+    font-size:14px;
+    font-style: italic;
+}
+
+.valid {
+    color: green;
+}
+
+.invalid {
+    color: red;
+}
         
 /* iconos */
 .fas{
