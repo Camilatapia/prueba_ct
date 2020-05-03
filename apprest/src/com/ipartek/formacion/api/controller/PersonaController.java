@@ -2,6 +2,7 @@ package com.ipartek.formacion.api.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -23,10 +24,11 @@ import javax.ws.rs.core.Response;
 //import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
-import com.ipartek.formacion.dao.CursoDao;
-import com.ipartek.formacion.dao.PersonaDao;
+import com.ipartek.formacion.dao.impl.CursoDao;
+import com.ipartek.formacion.dao.impl.PersonaDao;
 import com.ipartek.formacion.model.Curso;
 import com.ipartek.formacion.model.Persona;
+import com.ipartek.formacion.model.Rol;
 
 @Path("/personas")
 @Produces("application/json")
@@ -54,6 +56,20 @@ public class PersonaController {
 		ArrayList<Persona> registros = (ArrayList<Persona>) personaDAO.getAll(); 
 		return registros;
 	}
+	
+	/*@GET
+	public Response getAll(Rol rol) throws Exception {
+		LOGGER.info("getAll");		
+		// return personas;
+		//ArrayList<Persona> registros = (ArrayList<Persona>) personaDAO.getAllByRol(rol);
+		ArrayList<Persona> registros = new ArrayList<Persona>(); 
+
+		registros = (ArrayList<Persona>) personaDAO.getAllByRol(rol);
+
+		Response response = Response.status(Status.OK).entity(registros).build();
+		
+		return response;
+	}*/
 
 	@POST
 	public Response insert(Persona persona) {

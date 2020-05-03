@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumnos</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="vendors/animate.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+     <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+</head>
+<body>
+    <main class="container">
+
+        <h1>Listado Alumnos</h1>
+        <div class="container-filter">
+            <p>Buscador de alumnos por nombre</p>    
+            <select id="selectorSexo">
+                <option value="t" selected>Seleccionar</option>
+                <option value="h">Hombre</option>
+                <option value="m">Mujer</option>
+            </select>
+            <input type="search"  id="inombre"  placeholder="Escribe nombre">
+        </div>
+        <br>
+        <input type="button" class="btn btn-primary" value="Nueva Persona" onclick="seleccionar()">
+        
+        <div class="row align-self-center">
+        
+            <div class="col align-self-center">
+            <br>
+                <ul id="alumnos">
+                    <!-- innerHTML -->
+                    <li>Cargando....</li>     
+            </ul>
+            </div>
+            
+            <div id="content-formulario" class="col formulario" style="display:none">
+            
+                <form>
+                <div class="form-group">
+                <input class="form-control" type="text" id="inputId" placeholder="id" readonly>
+                </div>
+                <div class="form-group">
+                <input class="form-control" type="text" id="inputRol" placeholder="idRol" >
+                </div>   
+                <div class="form-group">
+                <label for="inputNombre">Escribe nombre</label>
+                <br><br>
+                <input class="form-control" type="text" id="inputNombre" placeholder="Escribe nombre">
+                </div>
+                <div>    
+                <label for="guardarSexo">Seleccionar sexo</label>
+                <br><br>
+                <select class="form-control" id="guardarSexo">
+                    <option value="t" selected>Seleccionar</option>
+                    <option value="h">Hombre</option>
+                    <option value="m">Mujer</option>
+                </select>
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="inputAvatar" placeholder="url imagen" readonly>
+                 </div>
+
+                 <div id="gallery">                    
+                </div>
+                <br>
+                <input type="button" class="btn btn-primary" value="Guardar" onclick="guardar()">
+                <input id="btnModal" type="button" class="btn btn-primary" value="Añadir cursos">
+            </form>
+            </div>
+            <div class="col">
+                <h2>Cursos</h2>
+                <ol id="cursosAlumno">
+                    <li>sin cursos</li>
+                </ol>
+            </div>
+        
+         
+            <!-- col-60 formulario -->
+           
+        </div>
+            
+    </main>
+   
+
+    <div id="modal" class="modal">
+      <!-- Modal content -->
+        <div class="modal-content">
+            <span id="close" class="close" style="justify-content: end;">&times;</span>
+            <h2>Listado Cursos</h2>
+                <div class="content-filtro">              
+                <input type="search" id="filtroCurso" placeholder="Buscar curso por nombre">                
+                </div>
+                <div class="table-responsive">
+                    <table id="cursos" class="table">
+                    <tr>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Id</th>
+                            <th>Titulo</th>
+                            <th>Precio</th>
+                        </tr>
+                    </tr>
+                    </table>
+                 </div>
+         </div>
+    </div>
+
+
+    <script src="js/ajax.js"></script>
+   
+    <script src="js/main2.js"></script>
+    
+</body>
+</html>

@@ -19,7 +19,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import com.ipartek.formacion.dao.CursoDao;
+import com.ipartek.formacion.dao.impl.CursoDao;
 import com.ipartek.formacion.model.Curso;
 import com.ipartek.formacion.model.Persona;
 

@@ -1,4 +1,4 @@
-package com.ipartek.formacion.dao;
+package com.ipartek.formacion.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.ipartek.formacion.dao.ConnectionManager;
+import com.ipartek.formacion.dao.IDAO;
 import com.ipartek.formacion.model.Curso;
+import com.ipartek.formacion.model.Persona;
 
 public class CursoDao implements IDAO<Curso> {
 	
@@ -16,11 +19,11 @@ public class CursoDao implements IDAO<Curso> {
 	
 	private static CursoDao INSTANCE = null;
 	
-	private static String SQL_GET_ALL   = "SELECT id, titulo, imagen, precio FROM curso ORDER BY id DESC LIMIT 100; ";
+	private static String SQL_GET_ALL   = "SELECT id, titulo, imagen, precio, profesor FROM curso ORDER BY id DESC LIMIT 100; ";
 	private static String SQL_GET_LIKE_NOMBRE   = "SELECT id, titulo, imagen, precio, profesor FROM curso WHERE titulo LIKE ? ORDER BY id DESC LIMIT 100; ";
 	private static String SQL_GET_BY_ID = "SELECT id, titulo, imagen, precio, profesor FROM curso WHERE id = ?; ";
 	
-	private static String SQL_GET_ROL ="SELECT \n" + 
+	/*private static String SQL_GET_ROL ="SELECT \n" + 
 	"	c.id as curso_id,\n" + 
 	"	c.titulo as curso_nombre,\n" + 
 	"	c.precio as curso_precio,\n" + 
@@ -34,7 +37,7 @@ public class CursoDao implements IDAO<Curso> {
 	"	r.nombre as rol_nombre\n" + 
 	" FROM (rol r INNER JOIN persona p ON r.id = p.id_rol)\n" + 
 	"     LEFT JOIN curso_comprado cc ON cc.id_persona = p.id\n" +
-	"     LEFT JOIN curso c ON cc.id_curso= c.id LIMIT 500;";
+	"     LEFT JOIN curso c ON cc.id_curso= c.id LIMIT 500;";*/
 	
 	
 	private static String SQL_DELETE    = "DELETE FROM curso WHERE id = ?; ";
@@ -57,7 +60,7 @@ public class CursoDao implements IDAO<Curso> {
 		LOGGER.info("getAll");		
 		ArrayList<Curso> registros = new ArrayList<Curso>();
 		try (Connection con = ConnectionManager.getConnection();
-				PreparedStatement pst = con.prepareStatement(SQL_GET_ROL);
+				PreparedStatement pst = con.prepareStatement(SQL_GET_ALL);
 				ResultSet rs = pst.executeQuery();) {
 
 			LOGGER.info(pst.toString());			
@@ -169,10 +172,12 @@ public class CursoDao implements IDAO<Curso> {
 	
 	private Curso mapper( ResultSet rs ) throws SQLException {
 		Curso c = new Curso();
+		Persona profesor = new Persona();
 		c.setId( rs.getInt("id") );
 		c.setTitulo( rs.getString("titulo"));
 		c.setImagen( rs.getString("imagen"));
 		c.setPrecio( rs.getInt("precio"));
+		c.setProfesor(profesor);
 		return c;
 	}
 	

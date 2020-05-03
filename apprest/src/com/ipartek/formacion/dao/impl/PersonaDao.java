@@ -1,4 +1,4 @@
-package com.ipartek.formacion.dao;
+package com.ipartek.formacion.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,26 +11,33 @@ import java.util.logging.Logger;
 
 import com.ipartek.formacion.model.Curso;
 import com.ipartek.formacion.model.Persona;
+import com.ipartek.formacion.model.Rol;
 import com.ipartek.formacion.dao.ConnectionManager;
+import com.ipartek.formacion.dao.IDAO;
+import com.ipartek.formacion.dao.IPersonaDAO;
 
 
-public class PersonaDao implements IDAO<Persona> {
+public class PersonaDao implements IPersonaDAO {
 
 	private static final Logger LOGGER = Logger.getLogger(PersonaDao.class.getCanonicalName());
 	
 	private static PersonaDao INSTANCE = null;
 	
 	private static String SQL_GET_ALL   = "SELECT \n" + 
+			"	r.id as rol_id,\n" +
+			"	r.nombre as rol_nombre,\n" +
 			"	p.id as persona_id,\n" + 
 			"	p.nombre as persona_nombre,\n" + 
 			"	p.avatar as persona_avatar,\n" + 
 			"	p.sexo as persona_sexo,\n" + 
+			"	p.id_rol as persona_rol,\n" +
 			"	c.id as curso_id,\n" + 
 			"	c.titulo as curso_nombre,\n" + 
 			"	c.precio as curso_precio,\n" + 
 			"	c.imagen  as curso_imagen\n" + 
-			" FROM (persona p LEFT JOIN curso_comprado cc ON p.id = cc.id_persona)\n" + 
-			"     LEFT JOIN curso c ON cc.id_curso = c.id LIMIT 500;  ";
+			" FROM rol r LEFT JOIN persona p ON r.id=p.id_rol\n" +
+			" LEFT JOIN curso_comprado cc ON p.id = cc.id_persona\n" + 
+			" LEFT JOIN curso c ON cc.id_curso = c.id LIMIT 500;  ";
 
 
 private static String SQL_GET_BY_ID = "SELECT \n" + 
@@ -38,16 +45,32 @@ private static String SQL_GET_BY_ID = "SELECT \n" +
 			"	p.nombre as persona_nombre,\n" + 
 			"	p.avatar as persona_avatar,\n" + 
 			"	p.sexo as persona_sexo,\n" + 
+			"	p.id_rol as persona_rol,\n" +
 			"	c.id as curso_id,\n" + 
 			"	c.titulo as curso_nombre,\n" + 
 			"	c.precio as curso_precio,\n" + 
 			"	c.imagen  as curso_imagen\n" + 
 			" FROM (persona p LEFT JOIN curso_comprado cc ON p.id = cc.id_persona)\n" + 
 			"     LEFT JOIN curso c ON cc.id_curso = c.id WHERE p.id = ? ;   ";
+	private static String SQL_GET_ROL ="SELECT \n" + 
+			"	r.id as rol_id,\n" +
+			"	r.nombre as rol_nombre,\n" +
+			"	p.id as persona_id,\n" + 
+			"	p.nombre as persona_nombre,\n" + 
+			"	p.avatar as persona_avatar,\n" + 
+			"	p.sexo as persona_sexo,\n" + 
+			"	p.id_rol as persona_rol,\n" +
+			"	c.id as curso_id,\n" + 
+			"	c.titulo as curso_nombre,\n" + 
+			"	c.precio as curso_precio,\n" + 
+			"	c.imagen  as curso_imagen\n" + 
+			" FROM rol r LEFT JOIN persona p ON r.id=p.id_rol\n" +
+			" LEFT JOIN curso_comprado cc ON p.id = cc.id_persona\n" + 
+			" LEFT JOIN curso c ON cc.id_curso = c.id WHERE p.id_rol = 2; ";
 
 	private static String SQL_DELETE    = "DELETE FROM persona WHERE id = ?; ";
-	private static String SQL_INSERT    = "INSERT INTO persona (nombre, avatar, sexo) VALUES ( ?, ?, ? ); ";
-	private static String SQL_UPDATE    = "UPDATE persona SET nombre = ?, avatar = ?,  sexo = ? WHERE id = ?; ";
+	private static String SQL_INSERT    = "INSERT INTO persona (nombre, avatar, sexo, id_rol) VALUES ( ?, ?, ?, ? ); ";
+	private static String SQL_UPDATE    = "UPDATE persona SET nombre = ?, avatar = ?,  sexo = ?, id_rol = ? WHERE id = ?; ";
 	private static String SQL_ASIGNAR_CURSO    = "INSERT INTO curso_comprado (id_persona, id_curso) VALUES ( ?, ?); ";
 	private static String SQL_ELIMINAR_CURSO    = "DELETE FROM curso_comprado WHERE id_persona = ? AND id_curso = ?;  ";
 	
@@ -94,7 +117,7 @@ private static String SQL_GET_BY_ID = "SELECT \n" +
 				registros = new ArrayList<Persona> ( hmPersonas.values() );
 				return registros;
 	}
-
+	
 	@Override
 	public Persona getById(int id) throws Exception {
 		Persona registro = null;
@@ -123,6 +146,36 @@ private static String SQL_GET_BY_ID = "SELECT \n" +
 
 		return registro;
 		}
+	
+	@Override
+	public List<Persona> getAllByRol(Rol rol) throws Exception {
+		LOGGER.info("getByRol");		
+		ArrayList<Persona> registros = new ArrayList<Persona>();
+		HashMap<Integer, Persona> hmPersonas = new HashMap<Integer, Persona>();
+		
+		try (Connection con = ConnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_GET_ROL);
+				) {
+			LOGGER.info(pst.toString());
+			//CUIDADO los simobolos % % no se pueden porner en la SQL, siempre en el PST
+			pst.setInt(1, rol.getId());
+			
+			try( ResultSet rs = pst.executeQuery(); ){
+				
+				LOGGER.info(pst.toString());			
+				while( rs.next() ) {
+					registros.add(mapper(rs, hmPersonas));
+									
+				}	
+			}	
+			
+		} catch (SQLException e) {
+			e.printStackTrace();		
+		}
+		registros = new ArrayList<Persona> ( hmPersonas.values() );
+		return registros;
+	}
+	
 
 	@Override
 	public Persona delete(int id) throws Exception, SQLException {
@@ -161,6 +214,8 @@ private static String SQL_GET_BY_ID = "SELECT \n" +
 			pst.setString(1, pojo.getNombre() );
 			pst.setString(2, pojo.getAvatar() );
 			pst.setString(3, pojo.getSexo() );
+			pst.setInt(4, pojo.getRol().getId());
+			//pst.setInt(4,pojo.getRol());
 			LOGGER.info(pst.toString());
 			
 			//eliminamos la persona
@@ -193,7 +248,9 @@ private static String SQL_GET_BY_ID = "SELECT \n" +
 			pst.setString(1, pojo.getNombre() );
 			pst.setString(2, pojo.getAvatar() );
 			pst.setString(3, pojo.getSexo() );
-			pst.setInt(4, pojo.getId() );
+			pst.setInt(4, pojo.getRol().getId());
+			//pst.setInt(4,pojo.getRol());
+			pst.setInt(5, pojo.getId() );
 			LOGGER.info(pst.toString());
 			
 			//eliminamos la persona
@@ -263,27 +320,37 @@ private static String SQL_GET_BY_ID = "SELECT \n" +
 		int key = rs.getInt("persona_id"); 
 		
 		Persona p = hm.get(key);
+		Rol rol;
+		rol = new Rol(rs.getInt("persona_rol"), rs.getString("rol_nombre"));			
 		
 		// si no existe en el hm se crea
 		if ( p == null ) {
-					
 		p = new Persona();
 		p.setId( key  );
 		p.setNombre( rs.getString("persona_nombre"));
 		p.setAvatar( rs.getString("persona_avatar"));
 		p.setSexo( rs.getString("persona_sexo"));
-								
-				}
+		p.setRol(rol);
 		
+		
+		//p.setRol(rs.getInt("persona_rol"));
+		}
+			
 		// se añade el curso
 		int idCurso = rs.getInt("curso_id");
 		if ( idCurso != 0) {
+			//TODO meter el profesor del curso. REVISAR
+			Persona profesor = new Persona(rs.getInt("persona_id"),rs.getString("persona_nombre"), 
+					rs.getString("persona_avatar"),rs.getString("persona_sexo"),rol);
 			Curso c = new Curso();
 			c.setId(idCurso);
 			c.setTitulo(rs.getString("curso_nombre"));
 			c.setPrecio( rs.getInt("curso_precio"));
-			c.setImagen(rs.getString("curso_imagen"));			
+			c.setImagen(rs.getString("curso_imagen"));	
+			c.setProfesor(profesor);
 			p.getCursos().add(c);
+			
+					
 		}	
 		
 		//actualizar hashmap
@@ -292,5 +359,7 @@ private static String SQL_GET_BY_ID = "SELECT \n" +
 		
 		
 	}
-}
+
+		
+	}
 

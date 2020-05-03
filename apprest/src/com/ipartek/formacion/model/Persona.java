@@ -32,7 +32,7 @@ public class Persona {
 		this.nombre = "";		
 		this.avatar = "avatar1.png";
 		this.sexo = "";
-		this.rol = new Rol();
+		this.rol = rol;
 		this.cursos = new ArrayList<Curso>();
 	}
 
@@ -84,6 +84,7 @@ public class Persona {
 	public void setCursos(ArrayList<Curso> cursos) {
 		this.cursos = cursos;
 	}
+
 
 	public Rol getRol() {
 		return rol;
