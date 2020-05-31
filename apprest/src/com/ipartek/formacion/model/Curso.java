@@ -24,20 +24,16 @@ public class Curso {
 	
 	public Curso() {
 		super();
-		this.id = 0;
-		this.titulo = "";		
-		this.imagen = "imagen1.png";
-		this.precio = 0;
-		this.profesor = new Persona();
+	
 	}
 
 	public Curso(int id, String titulo, String imagen, int precio, Persona profesor) {		
-		this();
-		this.id = id;
-		this.titulo = titulo;
-		this.imagen = imagen;
-		this.precio = precio;
-		this.profesor = profesor;
+		super();
+		this.id = 0;
+		this.titulo = "";
+		this.imagen = "";
+		this.precio = 0;
+		this.profesor = new Persona();
 		
 	}
 
@@ -85,6 +81,49 @@ public class Curso {
 	public String toString() {
 		return "Curso [id=" + id + ", titulo=" + titulo + ", imagen=" + imagen + ", precio=" + precio + ", profesor="
 				+ profesor + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		result = prime * result + ((imagen == null) ? 0 : imagen.hashCode());
+		result = prime * result + precio;
+		result = prime * result + ((profesor == null) ? 0 : profesor.hashCode());
+		result = prime * result + ((titulo == null) ? 0 : titulo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Curso other = (Curso) obj;
+		if (id != other.id)
+			return false;
+		if (imagen == null) {
+			if (other.imagen != null)
+				return false;
+		} else if (!imagen.equals(other.imagen))
+			return false;
+		if (precio != other.precio)
+			return false;
+		if (profesor == null) {
+			if (other.profesor != null)
+				return false;
+		} else if (!profesor.equals(other.profesor))
+			return false;
+		if (titulo == null) {
+			if (other.titulo != null)
+				return false;
+		} else if (!titulo.equals(other.titulo))
+			return false;
+		return true;
 	}
 
 	

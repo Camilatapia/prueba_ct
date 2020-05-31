@@ -19,6 +19,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 //import javax.ws.rs.core.Response.ResponseBuilder;
@@ -50,26 +51,81 @@ public class PersonaController {
 	}
 
 	@GET
-	public ArrayList<Persona> getAll() {
-		LOGGER.info("getAll");		
+	public Response getAll(@QueryParam("rol") String rol) {
+		LOGGER.info("getAll");	
+		Response response = Response.status(Status.INTERNAL_SERVER_ERROR).entity(null).build();
+		ArrayList<Persona> registros = new ArrayList<Persona>(); 
 		// return personas;
-		ArrayList<Persona> registros = (ArrayList<Persona>) personaDAO.getAll(); 
-		return registros;
+
+	
+		if (rol != null && !!"profesor".equals(rol.trim())){		
+					
+				try {
+					
+					LOGGER.info("Listado de Profesores");
+					registros = (ArrayList<Persona>) personaDAO.getAllProfesores();
+					response = Response.status(Status.OK).entity(registros).build();
+					
+				} catch (Exception e) {
+					
+					ResponseBody responseBody = new ResponseBody();
+					responseBody.setInformacion("Error: Lista de Profesores no encontrada");
+					response = Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+				}
+			
+		 
+		}else if(rol != null && !!"alumno".equals(rol.trim())) {
+			try {
+				
+				LOGGER.info("Listado de Alumnos con curso y profesor");
+				registros = (ArrayList<Persona>) personaDAO.getAllAlumnos();
+				response = Response.status(Status.OK).entity(registros).build();
+				
+			} catch (Exception e) {
+				ResponseBody responseBody = new ResponseBody();
+				responseBody.setInformacion("Lista de Alumnos no encontrada");
+				response = Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+			}
+			
+		} else {										
+			
+			LOGGER.info("Listado de todas las Personas");
+			
+			registros = (ArrayList<Persona>) personaDAO.getAll();
+			response = Response.status(Status.OK).entity(registros).build();
+		} 
+		return response;
+	
 	}
 	
-	/*@GET
-	public Response getAll(Rol rol) throws Exception {
-		LOGGER.info("getAll");		
-		// return personas;
-		//ArrayList<Persona> registros = (ArrayList<Persona>) personaDAO.getAllByRol(rol);
-		ArrayList<Persona> registros = new ArrayList<Persona>(); 
-
-		registros = (ArrayList<Persona>) personaDAO.getAllByRol(rol);
-
-		Response response = Response.status(Status.OK).entity(registros).build();
+	@GET
+	@Path("/{id}")
+	public Object getById(@PathParam("id") int id) {
 		
+		LOGGER.info("GetById Persona");
+		ArrayList<String> errores = new ArrayList<String>();
+		Response response = null;
+		
+		Persona persona;
+		try {
+			persona = personaDAO.getById(id);
+
+			if (persona != null) {
+				response = Response.status(Status.OK).entity(persona).build();
+			}
+		} catch (SQLException e) {
+			
+			errores.add(e.getMessage());
+			response = Response.status(Status.INTERNAL_SERVER_ERROR).entity(errores).build();
+			e.printStackTrace();
+		} catch (Exception e) {
+			
+			errores.add("id no encontrado");
+			response = Response.status(Status.NOT_FOUND).entity(errores).build();
+		}
 		return response;
-	}*/
+	}
+
 
 	@POST
 	public Response insert(Persona persona) {
@@ -187,7 +243,7 @@ public class PersonaController {
 			response = Response.status(Status.CREATED).entity(responseBody).build();
 			
 		} catch (Exception e) {			
-				responseBody.setInformacion(e.getMessage());
+				responseBody.setInformacion("Ya estas inscrito en este curso");
 				response = Response.status(Status.NOT_FOUND).entity(responseBody).build();
 		}
 

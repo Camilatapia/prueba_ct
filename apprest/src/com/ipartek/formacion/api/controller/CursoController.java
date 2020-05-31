@@ -2,15 +2,18 @@ package com.ipartek.formacion.api.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
+import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -60,7 +63,73 @@ public class CursoController {
 		
 		return response;
 	}
+	@GET
+	@Path("/{id: \\d+}")
+	public Response getById(@PathParam("id") int id) throws Exception {
+		
+		LOGGER.info("Obtener el curso por id");
+		Response response = Response.status(Status.INTERNAL_SERVER_ERROR).entity(null).build();
+
+		try {
+			
+			Curso curso = cursoDAO.getById(id);
+
+			if (curso == null) {
+				
+				response = Response.status(Status.NOT_FOUND).build();
+				LOGGER.warning("Error: Curso no encontrado, con id " + id);
+				throw new Exception("Error: Curso no encontrado");
+
+			} else {
+				response = Response.status(Status.OK).entity(curso).build();
+				LOGGER.info("Encontrado curso por id: " + curso);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOGGER.warning("No se ha podido obtener el curso con id " + id);
+		}
+		return response;
+	}
 	
+	@PUT
+	@Path("/{id: \\d+}")
+	public Response update(@PathParam("id") int id, Curso curso) {
+		
+		LOGGER.info("Update PathParam id (" + id + ", " + curso + ")");
+		
+		Response response = Response.status(Status.NOT_FOUND).entity(curso).build();
+		
+		Set<ConstraintViolation<Curso>> violations = validator.validate(curso);
+		ArrayList<String> errores = new ArrayList<String>();
+
+		if (violations.isEmpty()) {
+
+			try {
+				
+				cursoDAO.update(curso);
+				response = Response.status(Status.OK).entity(curso).build();
+				LOGGER.info("Curso modificado");
+				
+			} catch (Exception e) {
+				
+				errores.add("Error de nombre");
+				LOGGER.warning("Error de nombre del curso");
+				
+				response = Response.status(Status.CONFLICT).entity(errores).build();
+				
+			}
+		} else {
+			
+			for (ConstraintViolation<Curso> violation : violations) {
+				errores.add(violation.getPropertyPath() + ": " + violation.getMessage());
+			}
+			
+			LOGGER.warning("No se cumplen las validaciones para modificar el curso: " + errores);
+			response = Response.status(Status.BAD_REQUEST).entity(errores).build();
+		}
+
+		return response;
+	}
 	
 	@DELETE
 	@Path("/{id: \\d+}")

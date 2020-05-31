@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profesores</title>
+    <title>Alumnos</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="vendors/animate.css">
@@ -16,32 +16,32 @@
 <body>
     <main class="container">
 
-        <h1>Sistema de gestión Profesores</h1>
+        <h1>Sesión de Alumnos</h1>
         <div class="container-filter" style="color:midnightblue; font-weight: 600;">
-            <p>Buscador de profesores por nombre</p>    
+            <p>Buscador de alumnos por nombre</p>    
             <select id="selectorSexo">
                 <option value="t" selected>Seleccionar</option>
                 <option value="h">Hombre</option>
                 <option value="m">Mujer</option>
             </select>
             <input type="search"  id="inombre"  placeholder="Escribe nombre">
-            <input type="button" class="btn btn-primary" value="Agregar"  onclick="seleccionar()">
-       
+            <input type="button" class="btn btn-primary" value="Añadir Alumno" onclick="seleccionar()">
+        
         </div>
-        <br>
+    
         
         <div class="row align-self-center">
         
             <div class="col align-self-center" style="color:midnightblue; font-weight: 600;">
-            <br>
-            <h2>Listado de Profesores</h2>  
-            <ul id="alumnos">
+            <h2>Listado de Alumnos</h2>
+              
+                <ul id="alumnos">
                     <!-- innerHTML -->
                     <li>Cargando....</li>     
             </ul>
             </div>
             
-            <div id="content-formulario" class="col formulario" style="display:none" >
+            <div id="content-formulario" class="col formulario" style="display:none">
             
                 <form>
                 <div class="form-group">
@@ -51,7 +51,7 @@
                 <input class="form-control" type="text" id="inputRol" placeholder="idRol" hidden>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" id="nombreRol" placeholder="Profesor" readonly>
+                    <input class="form-control" type="text" id="nombreRol" placeholder="alumno" readonly>
                     </div>   
                 <div class="form-group">
                 <label for="inputNombre">Escribe nombre</label>
@@ -81,9 +81,9 @@
             </div>
             <div class="col">
                 <h2>Cursos</h2>
-                <ul id="cursosAlumno">
+                <ol id="cursosAlumno">
                     <li>sin cursos</li>
-                </ul>
+                </ol>
             </div>
         
          
@@ -119,9 +119,8 @@
 
 
     <script src="js/ajax.js"></script>
-    <!--<script src="js/profes.js"></script>
-   -->
-    <script src="js/main2.js"></script>
-    
+    <script src="js/alumnos.js"></script>
+   
+        
 </body>
 </html>

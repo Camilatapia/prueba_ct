@@ -1,14 +1,15 @@
+  
 "use strict";
 // este array se carga de forma asincrona mediante Ajax
 const endpoint = 'http://localhost:8080/apprestct/api/';
-//const endpoint = 'http://127.0.0.1:5500/appclient/js/data/personas.json';
+
 let personas =[];
 let cursos=[];
 let personaSeleccionada = { "id":0, 
                         "nombre": "sin nombre" , 
                         "avatar" : "img/avatar7.png", 
                         "sexo": "h",
-                        "rol" : {"id":2 ,"nombre":"profesor" },
+                        "rol" : {"id":1 ,"nombre":"alumno" },
                         "cursos": []
                         };
 
@@ -24,7 +25,7 @@ initGallery();
 pintarLista( personas );
 //al abrir ventana modal
 pintarCursos();
-const url = endpoint + 'personas/?rol=profesor';
+const url = endpoint + 'personas/?rol=alumno';
 const promesa = ajax("GET", url, undefined);
 promesa
 .then( data => {
@@ -94,14 +95,12 @@ inputNombre.addEventListener('keyup', function(){
       filtroCursos.addEventListener('keyup',  function(event) {
           let filtroValor = filtroCursos.value.trim();        
           if ( filtroValor.length >= 3 ){
-            
-            console.debug('filtroCursos keyup ' + filtroValor );
+              console.debug('filtroCursos keyup ' + filtroValor );
               pintarCursos(filtroValor);
           }else{
               pintarCursos();
           }
   
-
       });
 
      //3) Modal  
@@ -141,7 +140,7 @@ function eliminar(id=0){
         ajax('DELETE', url, undefined)
         .then( data => {
                     // conseguir de nuevo todos los alumnos
-                    const urlPersonas = endpoint + 'personas/?rol=profesor';
+                    const urlPersonas = endpoint + 'personas/?rol=alumno';
                     ajax("GET", urlPersonas, undefined)               
                     .then( data => {
                             console.trace('promesa resolve'); 
@@ -183,7 +182,7 @@ function seleccionar(id=0){
                                 "nombre": "sin nombre" ,
                                  "avatar" : "avatar7.png",
                                   "sexo": "h",
-                                  "rol" : {"id": 2, "nombre":"profesor"},
+                                  "rol" : {"id": 1, "nombre":"alumno"},
                                   "cursos": [] };
     }
    
@@ -247,7 +246,7 @@ function guardar(){
         "nombre" : nombre,
         "avatar" : avatar,
         "sexo" : sexo,
-        "rol" : {"id": 2, "nombre": "profesor"}
+        "rol" : {"id": 1, "nombre": "alumno"}
     };
 
     console.debug('persona a guardar %o', persona);
@@ -271,7 +270,7 @@ function guardar(){
                 document.getElementById('nombreRol').value = '';
                 
                     // conseguir de nuevo todos los alumnos
-                    const urlProf= endpoint + 'personas/?rol=profesor';  
+                    const urlProf= endpoint + 'personas/?rol=alumno';  
                     ajax("GET", urlProf, undefined)               
                     .then( data => {
                             console.trace('promesa resolve'); 
@@ -282,7 +281,7 @@ function guardar(){
                 
                     }).catch( error => {
                             console.warn('promesa rejectada');
-                            alert(error.informacion);
+                            alert(error);
                     });
 
             })
@@ -297,8 +296,8 @@ function guardar(){
         ajax('PUT', url , persona)
             .then( data => {
  
-                    // conseguir de nuevo listado profesores
-                    const urlPersonas= endpoint + 'personas/?rol=profesor';
+                    // conseguir de nuevo todos los alumnos
+                    const urlPersonas= endpoint + 'personas/?rol=alumno';
                     ajax("GET", urlPersonas, undefined)               
                     .then( data => {
                             console.trace('promesa resolve'); 
@@ -307,7 +306,7 @@ function guardar(){
                 
                     }).catch( error => {
                             console.warn('promesa rejectada');
-                            alert(error.informacion);
+                            alert(error);
                     });
 
             })
@@ -373,8 +372,12 @@ function pintarCursos( filtro = '' ){
          <td class= "align-self-center">
          <span>${el.precio} €</span>    
          </td>
+         <td class= "align-self-center">
+         <span>${el.profesor.nombre}</span>    
+         </td>
          <td class= "align-self-center" onclick="asignarCurso( 0, ${el.id})" >[x] Asignar
-         </td>`);
+         </td>
+         `);
          seleccionar(personaSeleccionada.id);   
         })
         .catch( error => alert('No se pueden cargar cursos' + error));
@@ -398,7 +401,7 @@ function eliminarCurso( event, idPersona, idCurso ){
         
             
             //llamada ajax para actualizar cursos.length de cada alumno
-            const urlPersonas = endpoint + 'personas/?rol=profesor';
+            const urlPersonas = endpoint + 'personas/?rol=alumno';
             const promesa = ajax("GET", urlPersonas, undefined);
             promesa
             .then( data => {
@@ -408,11 +411,11 @@ function eliminarCurso( event, idPersona, idCurso ){
             
             }).catch( error => {
                     console.warn('promesa rejectada');
-                    alert(error.informacion);
+                    alert(error);
             });
             event.target.parentElement.classList.add('animated', 'bounceOut');
     })
-    .catch( error => alert(error.informacion));
+    .catch( error => alert(error));
 
 }//eliminarCurso
 
@@ -449,7 +452,7 @@ function asignarCurso( idPersona = 0, idCurso ){
             // lista.classList.add('animated', 'bounceIn', 'delay-1s');                            
         
             //llamada ajax para actualizar cursos.length de cada alumno
-            const urlPersonas = endpoint + 'personas/?rol=profesor';
+            const urlPersonas = endpoint + 'personas/?rol=alumno';
             const promesa = ajax("GET", urlPersonas, undefined);
             promesa
             .then( data => {
@@ -459,13 +462,12 @@ function asignarCurso( idPersona = 0, idCurso ){
             
             }).catch( error => {
                     console.warn('promesa rejectada');
-                    alert(error.informacion);
+                    alert(error);
             });
     })
-    .catch( error => alert(error.informacion));
+    .catch( error => alert(error));
 
 }//asignarCurso
 
 
     
-

@@ -22,7 +22,21 @@ public interface IPersonaDAO extends IDAO<Persona>{
 	 */
 	List<Persona> getAllByRol( Rol rol) throws Exception;
 
+	/**
+	 * Lsitado de profesores
+	 * @param rol=2 en consulta 
+	 * @throws Exception 
+	 * @return
+	 */
+	List<Persona> getAllProfesores() throws Exception;
 	
+	/**
+	 * Lsitado de alumnos
+	 * @param rol=1 en consulta 
+	 * @throws Exception 
+	 * @return
+	 */
+	List<Persona> getAllAlumnos() throws Exception;
 	//TODO documentar y decir cuando lanza las posibles Exception, SQLException
 	/**
 	 * 

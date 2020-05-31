@@ -1,7 +1,9 @@
 /* estilos propios */
 
+
 body{
     box-sizing: content-box;
+    background-color: rgb(224, 239, 240);
 }
 
 h1{ 
@@ -13,12 +15,23 @@ h1{
     color: white; 
     
 }
-
+h2{
+    background-color:rgb(72, 61, 145);
+    color:white;
+    text-align: center;
+    padding: 10px 5px;
+    font-size:1.5em;
+}
 li{
-    border-bottom: 1px solid rgb(219, 216, 216);
+    border-bottom: 1px solid #dbd8d8;
     margin-bottom: 0.3rem;
     padding: 5px;
     
+}
+ul{
+    text-align: start;
+    text-justify: auto;
+    color: midnightblue;
 }
 
 main.container{
@@ -32,10 +45,13 @@ main.container{
 }
 
 input[type="button"]{
-    background-color: rgb(22, 151, 236);
-    padding: 3px 5px;
+    
+    padding: 5px 13px;
+    margin: 10px;
     border-radius: 10px;
     color: #FFF;
+    background-color:midnightblue; 
+    font-weight: 600;
 }
 
 .row{
@@ -46,6 +62,7 @@ input[type="button"]{
 
 #gallery img{
     filter: grayscale(100%);
+    
 }
 
 #gallery img.selected {
