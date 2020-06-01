@@ -39,7 +39,6 @@ public class CursoDao implements IDAO<Curso> {
 			"							c.titulo as curso_nombre,\r\n" + 
 			"							c.precio as curso_precio,\r\n" + 
 			"							c.imagen  as curso_imagen, \r\n" + 
-			"							c.id_profesor as id_profesor, \r\n" + 
 			"							p.id AS id_profesor, \r\n" + 
 			"							p.nombre as persona_nombre,\r\n" + 
 			"							p.sexo AS persona_sexo, \r\n" + 
@@ -52,7 +51,12 @@ public class CursoDao implements IDAO<Curso> {
 			"				c.precio as curso_precio,\r\n" + 
 			"				c.imagen  as curso_imagen,\r\n" + 
 			"				c.id_profesor as id_profesor,\r\n" +
-			"FROM curso c WHERE c.id = ?; ";
+			"				p.id AS id_profesor, \r\n" + 
+			"				p.nombre as persona_nombre,\r\n" + 
+			"				p.sexo AS persona_sexo, \r\n" + 
+			"				p.avatar AS persona_avatar,\r\n" + 
+			"				p.id_rol AS rol_id \r\n" +
+			"FROM curso c  left join persona p on c.id_profesor= p.id WHERE c.id = ?; ";
 	
 
 	private static String SQL_DELETE    = "DELETE FROM curso WHERE id = ?; ";
