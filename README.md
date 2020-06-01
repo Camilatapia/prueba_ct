@@ -35,7 +35,7 @@ AppRest es una API REST que permite gestionar la sesión de alumnos, sus datos y
 2. Tecnología usada: Java JAX-RS
 
 3. Configuración 
-    - Para configurar base de datos ["alumnos"](https://github.com/Camilatapia/prueba_ct/blob/master/script-db.sql) modificar [context.xml](https://github.com/Camilatapia/prueba_ct/blob/master/apprest/WebContent/META-INF/context.xml)
+    - Para configurar ["base de datos"](https://github.com/Camilatapia/prueba_ct/blob/v3.0/script-db.sql) modificar [context.xml](https://github.com/Camilatapia/prueba_ct/blob/v3.0/apprest/WebContent/META-INF/context.xml)
         
 ~~~
 username="root"
