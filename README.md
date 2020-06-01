@@ -22,11 +22,10 @@ Dos proyectos AppClient ( HTML5, CSS3, JS ) y AppRest ( Rest api con Java JAX-RS
 2. Tecnología utilizada: Html5, CSS3, Javascript 
 
 3. Configuración: 
-    - Cambiar estilos propios en archivo [style.js](https://github.com/Camilatapia/prueba_ct/blob/master/appclient/css/style.css)
-    - Sesión Profesores: Modificar la url base de la api en el inicio de [main2.js](https://github.com/Camilatapia/prueba_ct/blob/master/appclient/js/main2.js), llamada endpoint
-    - Sesión Alumnos: Modificar la url base de la api en el inicio de [alumnos.js](https://github.com/Camilatapia/prueba_ct/blob/master/appclient/js/alumnos.js), llamada endpoint
-    - En los archivos js se definen las diferentes url que recibe funcion [ajax()](https://github.com/Camilatapia/prueba_ct/blob/master/appclient/js/ajax.js) para realizar metodos del CRUD. 
-    - La carpeta [img](https://github.com/Camilatapia/prueba_ct/tree/master/appclient/img) contiene todas las imagenes de perfil de alumnos e iconos de cada curso.
+    - Cambiar estilos propios en archivo [style.js](https://github.com/Camilatapia/prueba_ct/blob/v3.0/appclient/css/style.css)
+    - Sesión Profesores/Alumnos: Modificar la url base de la api en el inicio de [main2.js](https://github.com/Camilatapia/prueba_ct/blob/v3.0/appclient/js/main2.js)y [alumnos.js](https://github.com/Camilatapia/prueba_ct/blob/v3.0/appclient/js/alumnos.js) respectivamente, llamada const endpoint = 'http://localhost:8080/apprestct/api/';
+    - En los archivos js se definen las diferentes url que recibe funcion [ajax()](https://github.com/Camilatapia/prueba_ct/blob/v3.0/appclient/js/ajax.js) para realizar metodos del CRUD. 
+    - La carpeta [img](https://github.com/Camilatapia/prueba_ct/tree/v3.0/appclient/img) contiene todas las imagenes de perfil de alumnos,profesores e iconos de cada curso.
 
 
 ## AppRest:
@@ -43,14 +42,21 @@ username="root"
 password="root"
 ~~~
 
-4. Detalle API rest con llamadas ajax
-    - ajax('POST','http://localhost:8080/apprestct/api/personas/', persona): Insertar un alumno nuevo en la base de datos
-    - ajax("GET", 'http://localhost:8080/apprestct/api/personas/', undefined) : Obtener todos los alumnos 
-    - ajax('PUT', 'http://localhost:8080/apprestct/api/personas/' + persona.id, persona) : Modificar datos de un alumno
-    - ajax('DELETE', 'http://localhost:8080/apprestct/api/personas/' + personaSeleccionada.id, undefined): Eliminar un alumno de la base de datos
-    - ajax( 'GET', 'http://localhost:8080/apprestct/api/cursos/?filtro='  + filtro, undefined ): Obtener listado de todos los cursos
-    - ajax('DELETE', 'http://localhost:8080/apprestct/api/personas/' + idPersona + "/curso/" + idCurso, undefined): Eliminar el curso idCurso asociado a un alumno idPersona
-    - ajax('POST', 'http://localhost:8080/apprestct/api/personas/' + idPersona + "/curso/" + idCurso, undefined): Insertar un curso idCurso a un alumno idPersona
+4. Detalle API rest
+    4.1 Alumnos: 
+    -'GET' = endpoint + 'personas/?rol={alumno}': Obtener todos los alumnos
+    4.2 Profesores:
+    - 'GET' = endpoint + 'personas/?rol={profesor}': Obtener todos los profesores
+    4.3 Personas:
+    - 'POST'= endpoint + 'personas/': Insertar una persona nueva en la base de datos
+    - 'GET' = endpoint + 'personas/': Obtener todos las personas
+    - 'PUT' = endpoint + 'personas/{id}': Modificar datos de una persona
+    - 'DELETE' = endpoint + 'personas/{id}': Eliminar una persona de la base de datos
+    4.4 Cursos:
+    - 'GET' = endpoint + '/cursos/?filtro=': Obtener listado de todos los cursos
+    - 'POST' = endpoint + 'personas/{idPersona}/cursos{idCurso}': Insertar un curso idCurso a una persona idPersona
+    - 'DELETE' = endpoint + 'personas/{idPersona}/cursos{idCurso}': Eliminar el curso idCurso asociado a una persona idPersona
+    
 
 ## Tags o Versiones:  
 ### Version V.1.0: 
